@@ -86,11 +86,12 @@ def render():
     fc1, fc2, fc3 = st.columns(3, gap="medium")
 
     cards = [
-        ("#fce8ef", "📷", "Upload Photo",
+        ("#fce8ef", "#c0587e", "📷", "Upload Photo",
          "Use your own photo or capture one live with your webcam. We analyze your skin directly."),
-        ("#e8f5e9", "📊", "Skin Tone Analysis",
+        # hijau pistachio
+        ("#e8f0e0", "#6a8f5a", "📊", "Skin Tone Analysis",
          "Get your skin tone, undertone classification, and Monk Skin Tone scale score instantly."),
-        ("#fce8ef", "✨", "Foundation Recommendation",
+        ("#fce8ef", "#c0587e", "✨", "Foundation Recommendation",
          "Matched foundations are ranked by Euclidean color distance for the most accurate shade."),
     ]
 
