@@ -1,255 +1,218 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
-
-def _lab_to_hex(L, a, b):
-    try:
-        from skimage.color import lab2rgb
-        rgb = lab2rgb([[[L, a, b]]])[0][0]
-        rgb = (rgb * 255).clip(0, 255).astype(int)
-        return f"#{rgb[0]:02x}{rgb[1]:02x}{rgb[2]:02x}"
-    except:
-        return "#c8956c"
-
-
-def format_rupiah(value):
-    try:
-        v = float(value)
-        return f"Rp{v:,.0f}".replace(",", ".")
-    except:
-        return str(value)
-
 
 def render():
     st.markdown("""
     <style>
-    .rec-card {
+    .step-card {
         background:white;border-radius:16px;
-        padding:22px 20px;margin-bottom:16px;
-        border:1px solid #f0e0e8;
-        position:relative;
-        transition:box-shadow 0.2s;
+        padding:22px 20px;margin-bottom:14px;
+        border:1px solid #f0d8e4;
+        display:flex;gap:16px;align-items:flex-start;
     }
-    .rec-card:hover {
-        box-shadow:0 4px 20px rgba(192,88,126,0.12);
-    }
-    .rec-rank {
-        width:32px;height:32px;border-radius:50%;
-        background:#f0f0f0;display:flex;
-        align-items:center;justify-content:center;
-        font-weight:700;font-size:14px;color:#555;
-        flex-shrink:0;
-    }
-    .rec-rank.top {
-        background:#fce8ef;color:#c0587e;
-        font-size:16px;
-    }
-    .match-bar-wrap {
-        background:#f5f5f5;border-radius:999px;
-        height:6px;overflow:hidden;margin:8px 0 4px;
-    }
-    .match-bar-fill {
-        height:100%;border-radius:999px;
-        background:linear-gradient(90deg,#f4a0b8,#c0587e);
-    }
-    .pill {
+    .tag-pill {
         display:inline-block;padding:3px 10px;
         border-radius:999px;font-size:11px;font-weight:600;
-        margin:2px;
-    }
-    .filter-section {
-        background:white;border-radius:14px;
-        padding:18px 20px;
-        border:1px solid #f0e0e8;
-        margin-bottom:20px;
+        margin:2px;background:#f5f0f5;color:#888;
     }
     </style>
     """, unsafe_allow_html=True)
 
-    result = st.session_state.get("analysis_result")
+    st.markdown("## About the Method")
+    st.markdown(
+        "<p style='color:#999;margin-top:-8px;'>"
+        "How Beauty Match analyzes your skin and recommends foundations</p>",
+        unsafe_allow_html=True
+    )
 
-    # Header
-    st.markdown("## Foundation Recommendations")
-    st.markdown("<p style='color:#888;margin-top:-8px;'>Matched to your skin tone — sorted by color similarity score</p>",
-                unsafe_allow_html=True)
-
-    if result is None:
-        st.info("No analysis result found. Please analyze your skin first.")
-        if st.button("→ Go to Skin Analysis"):
-            st.session_state["nav_target"] = "skin"
-            st.rerun()
-        return
-
-    # Your tone badge
-    skin_hex = result.get("skin_hex", "#c8956c")
-    st.markdown(f"""
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
-        <div style="width:22px;height:22px;border-radius:50%;
-            background:{skin_hex};border:2px solid rgba(0,0,0,0.1);"></div>
-        <span style="font-size:14px;color:#555;font-weight:600;">
-            Your tone: <strong>{skin_hex.upper()}</strong>
-        </span>
+    # Pipeline visual
+    st.markdown("""
+    <div style="background:linear-gradient(135deg,#fff0f5,#eef4e8);
+        border-radius:16px;padding:22px 24px;
+        margin-bottom:24px;border:1px solid #f0d8e4;">
+        <div style="font-weight:700;font-size:15px;
+            color:#1a1a1a;margin-bottom:16px;">
+            Processing Pipeline
+        </div>
+        <div style="display:flex;flex-wrap:wrap;
+            align-items:center;gap:8px;">
+            <div style="background:white;border-radius:8px;
+                padding:7px 14px;font-size:13px;font-weight:600;
+                border:1px solid #f0d8e4;color:#444;">
+                ⬆️ Upload Image
+            </div>
+            <span style="color:#f4a0b8;font-size:18px;">→</span>
+            <div style="background:white;border-radius:8px;
+                padding:7px 14px;font-size:13px;font-weight:600;
+                border:1px solid #f0d8e4;color:#444;">
+                🔍 Face Detection
+            </div>
+            <span style="color:#f4a0b8;font-size:18px;">→</span>
+            <div style="background:white;border-radius:8px;
+                padding:7px 14px;font-size:13px;font-weight:600;
+                border:1px solid #f0d8e4;color:#444;">
+                🎭 Skin Area Extraction
+            </div>
+            <span style="color:#f4a0b8;font-size:18px;">→</span>
+            <div style="background:white;border-radius:8px;
+                padding:7px 14px;font-size:13px;font-weight:600;
+                border:1px solid #f0d8e4;color:#444;">
+                🎨 RGB to LAB Conversion
+            </div>
+            <span style="color:#b8d8a0;font-size:18px;">→</span>
+            <div style="background:white;border-radius:8px;
+                padding:7px 14px;font-size:13px;font-weight:600;
+                border:1px solid #f0d8e4;color:#444;margin-top:8px;">
+                📊 K-Means Clustering
+            </div>
+            <span style="color:#b8d8a0;font-size:18px;">→</span>
+            <div style="background:white;border-radius:8px;
+                padding:7px 14px;font-size:13px;font-weight:600;
+                border:1px solid #f0d8e4;color:#444;margin-top:8px;">
+                📐 Euclidean Distance Matching
+            </div>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
-    top5 = result.get("top5_recs", [])
-    if not top5:
-        st.warning("No foundation recommendations available.")
-        return
+    steps = [
+        {
+            "icon": "⬆️", "icon_bg": "#fff0f5",
+            "num": "1", "badge_bg": "#f4a0b8", "badge_text": "#fff",
+            "label": "Input Layer", "label_bg": "#fff0f5", "label_color": "#c0587e",
+            "title": "Upload Image",
+            "tags": ["Input Validation", "Image Resizing", "EXIF Strip"],
+            "desc": (
+                "User uploads a facial photo via drag-and-drop or webcam capture. "
+                "Supported formats: JPG, PNG, WebP. Image is pre-processed to "
+                "normalize resolution and remove EXIF metadata."
+            ),
+        },
+        {
+            "icon": "🔍", "icon_bg": "#fff0f5",
+            "num": "2", "badge_bg": "#f4a0b8", "badge_text": "#fff",
+            "label": "MediaPipe FaceMesh", "label_bg": "#fff0f5",
+            "label_color": "#c0587e",
+            "title": "Face Detection",
+            "tags": ["MediaPipe", "FaceMesh", "468 Landmarks"],
+            "desc": (
+                "MediaPipe FaceMesh detects 468 3D facial landmarks. "
+                "This step identifies the face region and establishes landmark "
+                "coordinates used in the next step to isolate skin pixels."
+            ),
+        },
+        {
+            "icon": "🎭", "icon_bg": "#eef4e8",
+            "num": "3", "badge_bg": "#a8cc88", "badge_text": "#fff",
+            "label": "Polygon Masking", "label_bg": "#eef4e8",
+            "label_color": "#5a8050",
+            "title": "Skin Area Extraction",
+            "tags": ["Polygon ROI", "Binary Mask", "OpenCV"],
+            "desc": (
+                "Cheek, forehead, and chin regions are defined using facial landmark "
+                "polygons. A binary mask isolates skin pixels, excluding eyes, lips, "
+                "eyebrows, and background to reduce color interference."
+            ),
+        },
+        {
+            "icon": "🎨", "icon_bg": "#eef4e8",
+            "num": "4", "badge_bg": "#a8cc88", "badge_text": "#fff",
+            "label": "Perceptual Color Space", "label_bg": "#eef4e8",
+            "label_color": "#5a8050",
+            "title": "RGB to LAB Conversion",
+            "tags": ["CIE LAB", "sRGB", "Color Transform"],
+            "desc": (
+                "Extracted skin pixels are converted from sRGB to CIE LAB color space. "
+                "LAB is perceptually uniform, meaning numerical distances correspond "
+                "more closely to human-perceived color differences."
+            ),
+        },
+        {
+            "icon": "📊", "icon_bg": "#fff0f5",
+            "num": "5", "badge_bg": "#f4a0b8", "badge_text": "#fff",
+            "label": "Clustering", "label_bg": "#fff0f5",
+            "label_color": "#c0587e",
+            "title": "K-Means Clustering",
+            "tags": ["K-Means (k=3)", "Scikit-learn", "Cluster Centroid"],
+            "desc": (
+                "K-Means clustering (k=3) groups skin pixels into dominant color "
+                "clusters. The centroid of the largest cluster represents your "
+                "primary skin color for downstream matching."
+            ),
+        },
+        {
+            "icon": "📐", "icon_bg": "#eef4e8",
+            "num": "6", "badge_bg": "#a8cc88", "badge_text": "#fff",
+            "label": "Matching Engine", "label_bg": "#eef4e8",
+            "label_color": "#5a8050",
+            "title": "Euclidean Distance Matching",
+            "tags": ["Delta-E", "Foundation DB", "Ranked Results"],
+            "desc": (
+                "Your skin LAB values are compared against a curated foundation "
+                "database using Euclidean distance in LAB space (ΔE). Foundations "
+                "are ranked from closest to furthest color match."
+            ),
+        },
+    ]
 
-    df = pd.DataFrame(top5)
-
-    # ── Filters ───────────────────────────────────────────
-    with st.expander("🔽  Filter & Sort", expanded=True):
-        fc1, fc2, fc3 = st.columns([1.2, 1.2, 0.8], gap="medium")
-
-        with fc1:
-            st.markdown("**Brand**")
-            brands = ["All"] + sorted(df["Brand"].dropna().unique().tolist())
-            sel_brand = st.selectbox("brand_filter", brands,
-                                     label_visibility="collapsed", key="brand_filter")
-
-        with fc2:
-            st.markdown("**Undertone**")
-            undertones = ["All", "Warm", "Neutral-Warm", "Neutral", "Cool"]
-            sel_undertone = st.selectbox("undertone_filter", undertones,
-                                          label_visibility="collapsed",
-                                          key="undertone_filter")
-        with fc3:
-            st.markdown("**Sort By**")
-            sort_by = st.selectbox("sort_filter", ["Similarity", "Price"],
-                                    label_visibility="collapsed", key="sort_filter")
-
-    # Apply filters
-    df_show = df.copy()
-    if sel_brand != "All":
-        df_show = df_show[df_show["Brand"] == sel_brand]
-    if sel_undertone != "All":
-        df_show = df_show[df_show["Undertone"].str.contains(
-            sel_undertone, case=False, na=False)]
-    if sort_by == "Price":
-        df_show = df_show.sort_values("Price")
-
-    df_show = df_show.reset_index(drop=True)
-
-    if df_show.empty:
-        st.warning("No results match the selected filters.")
-        return
-
-    # ── Recommendation Cards ───────────────────────────────
-    for i, row in df_show.iterrows():
-        brand = str(row.get("Brand", "-"))
-        product = str(row.get("Product", "-"))
-        shade = str(row.get("Shade", "-"))
-        undertone = str(row.get("Undertone", "-"))
-        price = format_rupiah(row.get("Price", 0))
-
-        # Compute hex from LAB if available
-        try:
-            hex_c = _lab_to_hex(
-                float(row.get("lab_L", 66)),
-                float(row.get("lab_a", 16)),
-                float(row.get("lab_b", 28)),
-            )
-        except:
-            hex_c = skin_hex
-
-        # Match score: rough inverse delta-E normalized
-        try:
-            skin_lab = result["cielab"]
-            delta_e = math.sqrt(
-                (float(row.get("lab_L", 66)) - skin_lab["L"])**2 +
-                (float(row.get("lab_a", 16)) - skin_lab["a"])**2 +
-                (float(row.get("lab_b", 28)) - skin_lab["b"])**2
-            )
-            match_score = max(0, round(100 - delta_e * 3.5, 1))
-        except:
-            match_score = 90 - i * 3
-
-        is_top = i == 0
-        rank_html = (
-            f'<div class="rec-rank top">⭐</div>'
-            if is_top else
-            f'<div class="rec-rank">{i+1}</div>'
+    for step in steps:
+        tags_html = " ".join(
+            f'<span class="tag-pill">{t}</span>'
+            for t in step["tags"]
         )
-
-        # Undertone pill colors
-        ut_colors = {
-            "warm": ("#fdf6e3", "#c97c30"),
-            "neutral": ("#e8f5e9", "#2e7d32"),
-            "cool": ("#e8eef8", "#1565c0"),
-        }
-        pills = " ".join(
-            _make_pill(t, ut_colors)
-            for t in undertone.split()
-        )
-
         st.markdown(f"""
-        <div class="rec-card">
-            <div style="display:flex;align-items:flex-start;gap:14px;">
-                {rank_html}
-                <div style="
-                    width:64px;height:64px;border-radius:12px;
-                    background:{hex_c};flex-shrink:0;
-                    border:1px solid rgba(0,0,0,0.08);
-                    position:relative;">
-                    <div style="
-                        position:absolute;bottom:-6px;left:50%;
-                        transform:translateX(-50%);
-                        background:rgba(0,0,0,0.5);color:white;
-                        font-size:8px;font-weight:700;padding:1px 5px;
-                        border-radius:3px;white-space:nowrap;">
-                        {hex_c.upper()}
-                    </div>
-                </div>
-                <div style="flex:1;">
-                    <div style="font-size:12px;color:#999;
-                        margin-bottom:2px;">{brand}</div>
-                    <div style="font-weight:700;font-size:16px;
-                        color:#1a1a1a;margin-bottom:4px;">{shade}</div>
-                    <div style="margin-bottom:6px;">{pills}</div>
-                    <div style="font-size:12px;color:#888;">
-                        <strong>Color Match Score</strong>
-                    </div>
-                    <div class="match-bar-wrap">
-                        <div class="match-bar-fill"
-                            style="width:{match_score}%;"></div>
-                    </div>
-                    <div style="display:flex;justify-content:space-between;
-                        align-items:center;">
-                        <div style="font-size:12px;color:#888;">
-                            {match_score}%
-                        </div>
-                        <div style="font-weight:700;font-size:15px;
-                            color:#1a1a1a;">{price}</div>
-                    </div>
-                </div>
+        <div class="step-card">
+            <div style="width:44px;height:44px;border-radius:12px;
+                background:{step['icon_bg']};display:flex;
+                align-items:center;justify-content:center;
+                font-size:20px;flex-shrink:0;">
+                {step['icon']}
             </div>
-            <div style="
-                margin-top:12px;background:#fff8fb;
-                border-radius:10px;padding:12px;
-                border:1px solid #f5d0de;
-                font-size:12px;color:#666;line-height:1.6;">
-                <strong>Why it matches:</strong>
-                Near-perfect Euclidean match in LAB space.
-                {undertone} undertone aligns with your detected undertone bias.
+            <div style="flex:1;">
+                <div style="display:flex;justify-content:space-between;
+                    align-items:flex-start;flex-wrap:wrap;
+                    gap:8px;margin-bottom:8px;">
+                    <div>
+                        <div style="font-weight:700;font-size:15px;
+                            color:#1a1a1a;">{step['title']}</div>
+                        <div style="display:inline-block;margin-top:4px;
+                            background:{step['label_bg']};
+                            color:{step['label_color']};
+                            border-radius:999px;padding:2px 10px;
+                            font-size:11px;font-weight:700;">
+                            {step['label']}
+                        </div>
+                    </div>
+                    <div>{tags_html}</div>
+                </div>
+                <div style="display:flex;align-items:flex-start;gap:10px;">
+                    <div style="width:24px;height:24px;border-radius:50%;
+                        background:{step['badge_bg']};color:{step['badge_text']};
+                        display:flex;align-items:center;justify-content:center;
+                        font-size:12px;font-weight:700;flex-shrink:0;
+                        margin-top:1px;">
+                        {step['num']}
+                    </div>
+                    <div style="font-size:13px;color:#666;
+                        line-height:1.7;">{step['desc']}</div>
+                </div>
             </div>
         </div>
         """, unsafe_allow_html=True)
 
-    # Needed for math
-    import math
-
-
-def _make_pill(text, color_map):
-    t = text.strip().lower()
-    bg, fg = "#f0f0f0", "#555"
-    for key, (b, f) in color_map.items():
-        if key in t:
-            bg, fg = b, f
-            break
-    return (
-        f'<span class="pill" '
-        f'style="background:{bg};color:{fg};">'
-        f'{text.strip()}</span>'
-    )
+    # Accuracy note
+    st.markdown("""
+    <div style="background:linear-gradient(135deg,#fff0f5,#fdf6e3);
+        border-radius:16px;padding:22px 24px;margin-top:8px;
+        border:1px solid #f9d0de;">
+        <div style="font-weight:700;font-size:15px;
+            color:#c0587e;margin-bottom:8px;">
+            📌 Note on Accuracy
+        </div>
+        <div style="font-size:13px;color:#666;line-height:1.7;">
+            Results are most accurate when the photo is taken in natural light
+            without filters or heavy makeup. The model has been validated on a
+            diverse dataset covering MST 1–10. Individual results may vary based
+            on lighting conditions, camera quality, and photo angle.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
