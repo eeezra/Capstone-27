@@ -181,21 +181,22 @@ def render():
 
 
 def _run_analysis():
-    """Run the ML pipeline and navigate to results."""
     if "input_image" not in st.session_state:
         st.warning("Please upload or capture a photo first.")
         return
-
-    # Import your actual pipeline here
     try:
-        from app import load_resources, run_pipeline, FEATURE_COLS
+        # Import dari core, bukan dari app
+        from core.pipeline import (
+            load_resources, run_pipeline, FEATURE_COLS
+        )
         with st.spinner("Analyzing your skin tone…"):
             (face_mesh, ensemble, scaler,
              kmeans, df_found, centroids, mst_hex_lookup) = load_resources()
             result, error = run_pipeline(
                 st.session_state["input_image"],
                 face_mesh, ensemble, scaler,
-                kmeans, centroids, df_found, mst_hex_lookup, FEATURE_COLS
+                kmeans, centroids, df_found,
+                mst_hex_lookup, FEATURE_COLS
             )
         if error:
             st.error(error)
@@ -203,5 +204,7 @@ def _run_analysis():
             st.session_state["analysis_result"] = result
             st.session_state["nav_target"] = "results"
             st.rerun()
+    except Exception as e:
+        st.error(f"Analysis failed: {e}")
     except Exception as e:
         st.error(f"Analysis failed: {e}")
