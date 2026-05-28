@@ -324,29 +324,3 @@ SCROLLBAR
 
 </style>
 """, unsafe_allow_html=True)
-
-# =========================================================
-# ROUTING
-# =========================================================
-
-page = st.session_state.get("page", "home")
-
-if page == "home":
-    from pages_bm.home import render
-    render()
-
-elif page == "skin":
-    from pages_bm.skin_analysis import render
-    render()
-
-elif page == "results":
-    from pages_bm.results import render
-    render()
-
-elif page == "foundation":
-    from pages_bm.foundation import render
-    render()
-
-elif page == "about":
-    from pages_bm.about_method import render
-    render()
