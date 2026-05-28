@@ -36,41 +36,42 @@ st.markdown("""
 .stDeployButton { display: none; }
 
 /* ── Sidebar ── */
-[data-testid="stSidebar"] {
+section[data-testid="stSidebar"] {
     background: linear-gradient(
         180deg,
         rgba(255,240,245,.97) 0%,
         rgba(255,240,245,.94) 65%,
         rgba(212,235,194,.85) 100%
     ) !important;
-    border-right: 1px solid rgba(232,192,197,.70);
-    box-shadow: 12px 0 35px rgba(232,192,197,.16);
+    border-right: 1px solid rgba(232,192,197,.70) !important;
+    box-shadow: 12px 0 35px rgba(232,192,197,.16) !important;
     min-width: 210px !important;
     max-width: 210px !important;
 }
-[data-testid="stSidebar"] > div:first-child {
+section[data-testid="stSidebar"] > div:first-child {
     background: transparent !important;
+    padding-top: 1rem !important;
 }
-[data-testid="stSidebar"] .block-container {
-    padding: 1.2rem 1rem;
+section[data-testid="stSidebar"] .block-container {
+    padding: 1.2rem 1rem !important;
     background: transparent !important;
 }
 
 /* ── Sidebar radio nav ── */
-div[data-testid="stSidebar"] .stRadio > div {
+section[data-testid="stSidebar"] .stRadio > div {
     flex-direction: column;
     gap: 2px;
 }
-div[data-testid="stSidebar"] .stRadio [role="radiogroup"] {
+section[data-testid="stSidebar"] .stRadio [role="radiogroup"] {
     gap: 2px;
 }
-div[data-testid="stSidebar"] .stRadio input[type="radio"] {
+section[data-testid="stSidebar"] .stRadio input[type="radio"] {
     display: none !important;
 }
-div[data-testid="stSidebar"] .stRadio [data-testid="stMarkdownContainer"] {
+section[data-testid="stSidebar"] .stRadio [data-testid="stMarkdownContainer"] {
     display: none !important;
 }
-div[data-testid="stSidebar"] .stRadio label {
+section[data-testid="stSidebar"] .stRadio label {
     background: transparent !important;
     border-radius: 12px !important;
     padding: 10px 14px !important;
@@ -85,11 +86,11 @@ div[data-testid="stSidebar"] .stRadio label {
     border: none !important;
     margin: 1px 0;
 }
-div[data-testid="stSidebar"] .stRadio label:hover {
+section[data-testid="stSidebar"] .stRadio label:hover {
     background: rgba(255,168,214,.25) !important;
     color: #D94E91 !important;
 }
-div[data-testid="stSidebar"] .stRadio label:has(input:checked) {
+section[data-testid="stSidebar"] .stRadio label:has(input:checked) {
     background: linear-gradient(
         90deg,
         rgba(255,168,214,.82),
