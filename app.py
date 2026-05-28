@@ -9,12 +9,83 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-/* Paksa sidebar selalu terbuka dan sembunyikan tombol toggle */
+/* ── Lock sidebar ── */
 [data-testid="collapsedControl"] { display: none !important; }
 section[data-testid="stSidebar"] { 
     transform: none !important;
     width: 210px !important;
     min-width: 210px !important;
+}
+
+/* ── Sembunyikan radio dot bawaan Streamlit ── */
+section[data-testid="stSidebar"] .stRadio label > div:first-child {
+    display: none !important;
+}
+section[data-testid="stSidebar"] .stRadio [data-baseweb="radio"] > div:first-child {
+    display: none !important;
+}
+section[data-testid="stSidebar"] .stRadio [data-testid="stWidgetLabel"] {
+    display: none !important;
+}
+/* Sembunyikan semua SVG circle di radio */
+section[data-testid="stSidebar"] .stRadio svg {
+    display: none !important;
+}
+section[data-testid="stSidebar"] .stRadio [role="radio"] {
+    display: none !important;
+}
+
+/* ── Label nav jadi full width terlihat ── */
+section[data-testid="stSidebar"] .stRadio label {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    padding: 10px 14px !important;
+    border-radius: 12px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #758952 !important;
+    background: transparent !important;
+    border: none !important;
+    margin: 2px 0 !important;
+    cursor: pointer !important;
+    transition: all 0.18s !important;
+}
+section[data-testid="stSidebar"] .stRadio label:hover {
+    background: rgba(255,168,214,.25) !important;
+    color: #D94E91 !important;
+}
+section[data-testid="stSidebar"] .stRadio label:has(input:checked) {
+    background: linear-gradient(90deg, rgba(255,168,214,.82), rgba(249,209,217,.70)) !important;
+    color: #2F2330 !important;
+    box-shadow: 0 8px 18px rgba(248,138,189,.16) !important;
+}
+
+/* ── Sembunyikan input radio aslinya ── */
+section[data-testid="stSidebar"] .stRadio input[type="radio"] {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    position: absolute !important;
+}
+
+/* ── Flex column untuk daftar nav ── */
+section[data-testid="stSidebar"] .stRadio > div > div {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+    width: 100% !important;
+}
+
+/* ── Teks label harus tampil ── */
+section[data-testid="stSidebar"] .stRadio label p,
+section[data-testid="stSidebar"] .stRadio label span {
+    display: inline !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: inherit !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
 }
 </style>
 """, unsafe_allow_html=True)
