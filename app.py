@@ -314,7 +314,7 @@ SCROLLBAR
 """, unsafe_allow_html=True)
 
 # =========================================================
-SIDEBAR
+# SIDEBAR
 # =========================================================
 
 with st.sidebar:
@@ -380,7 +380,7 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
 # =========================================================
-ROUTING
+# ROUTING
 # =========================================================
 
 page = st.session_state.get("page", "home")
