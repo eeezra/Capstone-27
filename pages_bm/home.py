@@ -1,4 +1,3 @@
-```python
 import streamlit as st
 
 def render():
@@ -210,7 +209,7 @@ def render():
     """, unsafe_allow_html=True)
 
     # =========================================================
-    HERO
+    # HERO
     # =========================================================
 
     st.markdown("""
@@ -236,7 +235,7 @@ def render():
     """, unsafe_allow_html=True)
 
     # =========================================================
-    CTA BUTTONS
+    # CTA BUTTONS
     # =========================================================
 
     _, col1, col2, _ = st.columns([2.2, .95, .95, 2.2])
@@ -264,7 +263,7 @@ def render():
     st.markdown("<div style='height:1.6rem'></div>", unsafe_allow_html=True)
 
     # =========================================================
-    FEATURE CARDS
+    # FEATURE CARDS
     # =========================================================
 
     st.markdown('<div class="cards-wrap">', unsafe_allow_html=True)
@@ -324,7 +323,7 @@ def render():
     st.markdown('</div>', unsafe_allow_html=True)
 
     # =========================================================
-    STATS BAR
+    # STATS BAR
     # =========================================================
 
     st.markdown("""
@@ -354,4 +353,3 @@ def render():
     </div>
 
     """, unsafe_allow_html=True)
-```
