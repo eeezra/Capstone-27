@@ -1,3 +1,4 @@
+```python
 import streamlit as st
 
 st.set_page_config(
@@ -7,314 +8,413 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-st.markdown("""
-<style>
-[data-testid="collapsedControl"] { display: none !important; }
-section[data-testid="stSidebar"] {
-    transform: none !important;
-    width: 210px !important;
-    min-width: 210px !important;
-    max-width: 210px !important;
-}
-</style>
-""", unsafe_allow_html=True)
+# =========================================================
+# GLOBAL CSS
+# =========================================================
 
 st.markdown("""
 <style>
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap');
 
-* { font-family: 'Inter', sans-serif !important; }
+*{
+    font-family:'Inter',sans-serif !important;
+}
 
-.stApp {
+html, body, [class*="css"]{
+    color:#2F2330;
+}
+
+/* =========================================================
+MAIN APP
+========================================================= */
+
+.stApp{
     background:
-        radial-gradient(circle at 88% 8%,  rgba(255,168,214,.38), transparent 22rem),
-        radial-gradient(circle at 6%  82%,  rgba(212,235,194,.50), transparent 22rem),
-        linear-gradient(135deg, #FFF0F5 0%, #FFF8F6 50%, #F9EEF2 100%) !important;
-    color: #2F2330;
-}
-.main, .main .block-container {
-    background: transparent !important;
-}
-.main .block-container {
-    padding-top: 1rem;
-    padding-bottom: 2rem;
-    max-width: 1200px;
+        radial-gradient(circle at 90% 8%, rgba(255,192,220,.28), transparent 18rem),
+        radial-gradient(circle at 8% 82%, rgba(212,235,194,.35), transparent 20rem),
+        linear-gradient(
+            135deg,
+            #FFF5F8 0%,
+            #FFF8F7 50%,
+            #FFF3F6 100%
+        ) !important;
+
+    overflow-x:hidden;
 }
 
-#MainMenu, footer, header { visibility: hidden; }
-.stDeployButton { display: none; }
+/* floating blobs */
 
-/* ── Sidebar background ── */
-section[data-testid="stSidebar"] {
-    background: linear-gradient(
+.stApp::before{
+    content:"";
+    position:fixed;
+    width:320px;
+    height:320px;
+    border-radius:50%;
+    background:rgba(212,235,194,.28);
+    left:-120px;
+    bottom:40px;
+    filter:blur(8px);
+    z-index:-1;
+}
+
+.stApp::after{
+    content:"";
+    position:fixed;
+    width:240px;
+    height:240px;
+    border-radius:50%;
+    background:rgba(255,192,220,.22);
+    right:-80px;
+    top:-40px;
+    filter:blur(8px);
+    z-index:-1;
+}
+
+/* =========================================================
+STREAMLIT CLEANUP
+========================================================= */
+
+#MainMenu,
+footer,
+header{
+    visibility:hidden;
+}
+
+.stDeployButton{
+    display:none;
+}
+
+[data-testid="collapsedControl"]{
+    display:none !important;
+}
+
+section.main > div{
+    padding-top:0 !important;
+}
+
+/* =========================================================
+BLOCK CONTAINER
+========================================================= */
+
+.main .block-container{
+    max-width:980px !important;
+
+    padding-top:.5rem !important;
+    padding-bottom:2rem !important;
+
+    margin:auto !important;
+}
+
+/* =========================================================
+SIDEBAR
+========================================================= */
+
+section[data-testid="stSidebar"]{
+    width:170px !important;
+    min-width:170px !important;
+    max-width:170px !important;
+
+    background:linear-gradient(
         180deg,
-        rgba(255,240,245,.97) 0%,
-        rgba(255,240,245,.94) 65%,
-        rgba(212,235,194,.85) 100%
+        rgba(255,240,245,.96) 0%,
+        rgba(255,240,245,.93) 65%,
+        rgba(212,235,194,.82) 100%
     ) !important;
-    border-right: 1px solid rgba(232,192,197,.70) !important;
-    box-shadow: 12px 0 35px rgba(232,192,197,.16) !important;
-}
-section[data-testid="stSidebar"] > div:first-child {
-    background: transparent !important;
-    padding-top: 0 !important;
-}
-section[data-testid="stSidebar"] .block-container {
-    padding: 0.8rem 0.7rem !important;
-    background: transparent !important;
+
+    border-right:1px solid rgba(232,192,197,.55);
+
+    box-shadow:10px 0 30px rgba(232,192,197,.12);
 }
 
-/* ── Hapus semua margin/padding bawaan stButton di sidebar ── */
-section[data-testid="stSidebar"] div[data-testid="stVerticalBlock"] {
-    gap: 0 !important;
+section[data-testid="stSidebar"] .block-container{
+    padding:.8rem .7rem !important;
 }
-section[data-testid="stSidebar"] div[data-testid="stVerticalBlock"] > div {
-    margin: 0 !important;
-    padding: 0 !important;
+
+/* sidebar header */
+
+.sidebar-brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:.5rem .2rem .9rem;
+
+    border-bottom:1px solid rgba(232,192,197,.45);
+
+    margin-bottom:.7rem;
 }
-section[data-testid="stSidebar"] .stButton {
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100% !important;
+
+.brand-icon{
+    width:34px;
+    height:34px;
+
+    border-radius:11px;
+
+    background:linear-gradient(
+        135deg,
+        #FFA8D6,
+        #838F58
+    );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:white;
+    font-size:.95rem;
+    font-weight:700;
 }
-section[data-testid="stSidebar"] .stButton > button {
-    width: 100% !important;
-    text-align: left !important;
-    justify-content: flex-start !important;
-    background: transparent !important;
-    border: none !important;
-    border-radius: 8px !important;
-    padding: 8px 10px !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    color: #758952 !important;
-    box-shadow: none !important;
-    min-height: unset !important;
-    height: 36px !important;
-    line-height: 1 !important;
-    margin: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    transition: background 0.15s, color 0.15s !important;
-    transform: none !important;
+
+.brand-small{
+    font-size:.58rem;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+
+    color:#758952;
 }
-section[data-testid="stSidebar"] .stButton > button:hover {
-    background: rgba(255,168,214,.28) !important;
-    color: #D94E91 !important;
-    transform: none !important;
-    box-shadow: none !important;
+
+.brand-big{
+    font-size:.92rem;
+    font-weight:900;
+
+    color:#2F2330;
 }
-section[data-testid="stSidebar"] .nav-active .stButton > button {
-    background: linear-gradient(
+
+/* sidebar buttons */
+
+section[data-testid="stSidebar"] .stButton{
+    margin:0 !important;
+    padding:0 !important;
+}
+
+section[data-testid="stSidebar"] .stButton > button{
+
+    width:100% !important;
+
+    height:36px !important;
+
+    border:none !important;
+
+    background:transparent !important;
+
+    border-radius:10px !important;
+
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+
+    padding:0 .7rem !important;
+
+    color:#6F8150 !important;
+
+    font-size:.82rem !important;
+    font-weight:600 !important;
+
+    box-shadow:none !important;
+
+    transition:all .15s ease !important;
+}
+
+section[data-testid="stSidebar"] .stButton > button:hover{
+    background:rgba(255,168,214,.18) !important;
+    color:#D94E91 !important;
+}
+
+.active-nav .stButton > button{
+    background:linear-gradient(
         90deg,
-        rgba(255,168,214,.82),
-        rgba(249,209,217,.65)
+        rgba(255,168,214,.85),
+        rgba(249,209,217,.62)
     ) !important;
-    color: #2F2330 !important;
-    font-weight: 700 !important;
-    box-shadow: none !important;
+
+    color:#2F2330 !important;
+
+    font-weight:700 !important;
 }
 
-/* ── Global buttons konten utama ── */
-.main .stButton > button {
-    border-radius: 999px !important;
-    font-weight: 700 !important;
-    transition: all 0.2s !important;
-    min-height: 44px !important;
-}
-.main .stButton > button:hover {
-    transform: translateY(-1px) !important;
-    box-shadow: 0 6px 18px rgba(192,88,126,.22) !important;
-}
-.main .stButton > button[kind="primary"] {
-    background: linear-gradient(135deg, #F48ABD, #D94E91) !important;
-    color: white !important;
-    border: none !important;
-    box-shadow: 0 8px 20px rgba(217,78,145,.20) !important;
-}
-.main .stButton > button[kind="secondary"] {
-    background: rgba(255,255,255,.80) !important;
-    color: #758952 !important;
-    border: 1.5px solid rgba(117,137,82,.50) !important;
+/* sidebar footer */
+
+.sidebar-footer{
+    position:fixed;
+
+    left:.8rem;
+    bottom:1rem;
+
+    width:145px;
+
+    padding:.75rem;
+
+    border-radius:14px;
+
+    background:rgba(212,235,194,.42);
+
+    border:1px solid rgba(181,196,154,.30);
+
+    text-align:center;
+
+    font-size:.66rem;
+    line-height:1.6;
+
+    color:#758952;
 }
 
-/* ── Tabs ── */
-.stTabs [data-baseweb="tab-list"] {
-    background: rgba(255,240,245,.80);
-    border-radius: 999px;
-    padding: 4px;
-    gap: 4px;
-    border-bottom: none !important;
-}
-.stTabs [data-baseweb="tab"] {
-    border-radius: 999px !important;
-    padding: 6px 18px !important;
-    font-weight: 600 !important;
-    font-size: 13px !important;
-    color: #999 !important;
-    background: transparent !important;
-    border: none !important;
-}
-.stTabs [aria-selected="true"] {
-    background: white !important;
-    color: #D94E91 !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,.08) !important;
-}
-.stTabs [data-baseweb="tab-highlight"],
-.stTabs [data-baseweb="tab-border"] { display: none !important; }
+/* =========================================================
+GLOBAL BUTTONS
+========================================================= */
 
-/* ── Selectbox ── */
-.stSelectbox > div > div {
-    border-radius: 10px !important;
-    border-color: rgba(248,168,214,.50) !important;
-    background: rgba(255,255,255,.80) !important;
+.main .stButton > button{
+
+    border-radius:999px !important;
+
+    font-weight:700 !important;
+
+    height:46px !important;
+    min-height:46px !important;
+
+    font-size:.92rem !important;
+
+    transition:all .18s ease !important;
 }
 
-/* ── Misc ── */
-.stFileUploader { border-radius: 14px !important; }
-.stDataFrame { border-radius: 12px !important; overflow: hidden !important; }
-.stSpinner > div { border-top-color: #D94E91 !important; }
-.streamlit-expanderHeader {
-    background: rgba(255,255,255,.75) !important;
-    border-radius: 12px !important;
-    border: 1px solid rgba(248,168,214,.40) !important;
-    font-weight: 600 !important;
+.main .stButton > button:hover{
+    transform:translateY(-1px);
+
+    box-shadow:0 8px 20px rgba(217,78,145,.16) !important;
 }
 
-/* ── Scrollbar ── */
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: #FFF0F5; }
-::-webkit-scrollbar-thumb { background: #F4A0B8; border-radius: 999px; }
+.main .stButton > button[kind="primary"]{
+
+    background:linear-gradient(
+        135deg,
+        #F48ABD,
+        #D94E91
+    ) !important;
+
+    color:white !important;
+
+    border:none !important;
+}
+
+.main .stButton > button[kind="secondary"]{
+
+    background:rgba(255,255,255,.72) !important;
+
+    border:1.5px solid rgba(117,137,82,.45) !important;
+
+    color:#758952 !important;
+}
+
+/* =========================================================
+SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar{
+    width:5px;
+}
+
+::-webkit-scrollbar-track{
+    background:#FFF0F5;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#F4A0B8;
+    border-radius:999px;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
-# ─── Sidebar ──────────────────────────────────────────────
+# =========================================================
+SIDEBAR
+# =========================================================
+
 with st.sidebar:
 
     st.markdown("""
-    <div style="
-        display:flex;align-items:center;gap:9px;
-        padding:.6rem .2rem .75rem;
-        border-bottom:1px solid rgba(232,192,197,.55);
-        margin-bottom:.5rem;">
-        <div style="
-            width:36px;height:36px;border-radius:11px;flex-shrink:0;
-            background:linear-gradient(135deg,#FFA8D6,#838F58);
-            display:flex;align-items:center;justify-content:center;
-            font-size:1rem;color:white;
-            box-shadow:0 5px 12px rgba(117,137,82,.20);">✿</div>
-        <div>
-            <div style="font-size:.62rem;font-weight:700;
-                letter-spacing:.08em;text-transform:uppercase;
-                color:#758952;line-height:1.3;">Capstone 27</div>
-            <div style="font-weight:900;font-size:.92rem;
-                color:#2F2330;line-height:1.2;">Beauty Match</div>
+    <div class="sidebar-brand">
+
+        <div class="brand-icon">
+            ✿
         </div>
+
+        <div>
+            <div class="brand-small">
+                Capstone 27
+            </div>
+
+            <div class="brand-big">
+                Beauty Match
+            </div>
+        </div>
+
     </div>
     """, unsafe_allow_html=True)
 
     if "page" not in st.session_state:
-        st.session_state["page"] = "home"
-
-    if "nav_target" in st.session_state:
-        st.session_state["page"] = st.session_state.pop("nav_target")
+        st.session_state.page = "home"
 
     nav_items = [
-        ("home",       "⌂",  "Home"),
-        ("skin",       "▣",  "Skin Analysis"),
-        ("results",    "▥",  "Results"),
-        ("foundation", "✧",  "Foundation"),
-        ("about",      "▤",  "About Method"),
+        ("home", "⌂  Home"),
+        ("skin", "▣  Skin Analysis"),
+        ("results", "▥  Results"),
+        ("foundation", "✧  Foundation"),
+        ("about", "▤  About Method"),
     ]
 
-    # Render semua nav sekaligus dalam satu HTML block
-    # supaya spacing 100% konsisten, tanpa pengaruh margin Streamlit
-    current_page = st.session_state["page"]
+    for page_id, label in nav_items:
 
-    nav_html = '<div style="display:flex;flex-direction:column;gap:2px;">'
-    for page_id, icon, label in nav_items:
-        is_active = current_page == page_id
-        if is_active:
-            bg = "linear-gradient(90deg,rgba(255,168,214,.82),rgba(249,209,217,.65))"
-            color = "#2F2330"
-            fw = "700"
-        else:
-            bg = "transparent"
-            color = "#758952"
-            fw = "600"
-        nav_html += f"""
-        <div onclick="window.location.href='?nav={page_id}'"
-            style="
-                display:flex;align-items:center;gap:8px;
-                padding:8px 10px;border-radius:8px;
-                background:{bg};color:{color};
-                font-size:13px;font-weight:{fw};
-                cursor:pointer;transition:background 0.15s;
-                user-select:none;">
-            <span>{icon}</span>
-            <span>{label}</span>
-        </div>"""
-    nav_html += '</div>'
+        active = st.session_state.page == page_id
 
-    # Render nav HTML — tapi onclick tidak bisa trigger Streamlit
-    # Jadi tetap pakai st.button tapi wrap dalam container zero-gap
-    st.markdown('</div>', unsafe_allow_html=True)  # tutup block container
-
-    # Pakai st.button dengan container CSS yang kita kontrol penuh
-    for page_id, icon, label in nav_items:
-        is_active = st.session_state["page"] == page_id
-        if is_active:
-            st.markdown(
-                f"""<div style="
-                    background:linear-gradient(90deg,rgba(255,168,214,.82),rgba(249,209,217,.65));
-                    border-radius:8px;margin:1px 0;padding:0;">""",
-                unsafe_allow_html=True
-            )
-        else:
-            st.markdown(
-                '<div style="margin:1px 0;padding:0;">',
-                unsafe_allow_html=True
-            )
+        if active:
+            st.markdown('<div class="active-nav">', unsafe_allow_html=True)
 
         clicked = st.button(
-            f"{icon}  {label}",
+            label,
             key=f"nav_{page_id}",
-            use_container_width=True,
+            use_container_width=True
         )
+
+        if active:
+            st.markdown('</div>', unsafe_allow_html=True)
+
         if clicked:
-            st.session_state["page"] = page_id
+            st.session_state.page = page_id
             st.rerun()
 
-        st.markdown('</div>', unsafe_allow_html=True)
-
     st.markdown("""
-    <div style="
-        position:fixed;bottom:1.4rem;left:.9rem;width:180px;
-        text-align:center;padding:.75rem;
-        border-radius:.85rem;
-        background:rgba(212,235,194,.42);
-        border:1px solid rgba(181,196,154,.38);
-        font-size:.70rem;color:#758952;line-height:1.65;">
+    <div class="sidebar-footer">
         Capstone Project 2026<br>
-        <span style="color:#B8C4A0;">Beauty Tech Research Lab</span>
+        <span style="opacity:.65">
+            Beauty Tech Research Lab
+        </span>
     </div>
     """, unsafe_allow_html=True)
 
-# ─── Route Pages ──────────────────────────────────────────
+# =========================================================
+ROUTING
+# =========================================================
+
 page = st.session_state.get("page", "home")
 
 if page == "home":
     from pages_bm.home import render
     render()
+
 elif page == "skin":
     from pages_bm.skin_analysis import render
     render()
+
 elif page == "results":
     from pages_bm.results import render
     render()
+
 elif page == "foundation":
     from pages_bm.foundation import render
     render()
+
 elif page == "about":
     from pages_bm.about_method import render
     render()
+```
