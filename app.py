@@ -7,7 +7,6 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ─── Lock sidebar ─────────────────────────────────────────
 st.markdown("""
 <style>
 [data-testid="collapsedControl"] { display: none !important; }
@@ -20,7 +19,6 @@ section[data-testid="stSidebar"] {
 </style>
 """, unsafe_allow_html=True)
 
-# ─── Global CSS ───────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap');
@@ -66,10 +64,18 @@ section[data-testid="stSidebar"] .block-container {
     background: transparent !important;
 }
 
-/* ── Nav buttons sidebar — compact & flat ── */
+/* ── Hapus semua margin/padding bawaan stButton di sidebar ── */
+section[data-testid="stSidebar"] div[data-testid="stVerticalBlock"] {
+    gap: 0 !important;
+}
+section[data-testid="stSidebar"] div[data-testid="stVerticalBlock"] > div {
+    margin: 0 !important;
+    padding: 0 !important;
+}
 section[data-testid="stSidebar"] .stButton {
     margin: 0 !important;
     padding: 0 !important;
+    width: 100% !important;
 }
 section[data-testid="stSidebar"] .stButton > button {
     width: 100% !important;
@@ -78,18 +84,19 @@ section[data-testid="stSidebar"] .stButton > button {
     background: transparent !important;
     border: none !important;
     border-radius: 8px !important;
-    padding: 7px 10px !important;
+    padding: 8px 10px !important;
     font-size: 13px !important;
     font-weight: 600 !important;
     color: #758952 !important;
     box-shadow: none !important;
     min-height: unset !important;
-    height: 34px !important;
+    height: 36px !important;
     line-height: 1 !important;
     margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
     transition: background 0.15s, color 0.15s !important;
     transform: none !important;
-    letter-spacing: 0 !important;
 }
 section[data-testid="stSidebar"] .stButton > button:hover {
     background: rgba(255,168,214,.28) !important;
@@ -100,7 +107,7 @@ section[data-testid="stSidebar"] .stButton > button:hover {
 section[data-testid="stSidebar"] .nav-active .stButton > button {
     background: linear-gradient(
         90deg,
-        rgba(255,168,214,.80),
+        rgba(255,168,214,.82),
         rgba(249,209,217,.65)
     ) !important;
     color: #2F2330 !important;
@@ -108,7 +115,7 @@ section[data-testid="stSidebar"] .nav-active .stButton > button {
     box-shadow: none !important;
 }
 
-/* ── Global buttons (konten utama) ── */
+/* ── Global buttons konten utama ── */
 .main .stButton > button {
     border-radius: 999px !important;
     font-weight: 700 !important;
@@ -154,9 +161,7 @@ section[data-testid="stSidebar"] .nav-active .stButton > button {
     box-shadow: 0 2px 8px rgba(0,0,0,.08) !important;
 }
 .stTabs [data-baseweb="tab-highlight"],
-.stTabs [data-baseweb="tab-border"] {
-    display: none !important;
-}
+.stTabs [data-baseweb="tab-border"] { display: none !important; }
 
 /* ── Selectbox ── */
 .stSelectbox > div > div {
@@ -189,20 +194,20 @@ with st.sidebar:
     st.markdown("""
     <div style="
         display:flex;align-items:center;gap:9px;
-        padding:.6rem .3rem .8rem;
+        padding:.6rem .2rem .75rem;
         border-bottom:1px solid rgba(232,192,197,.55);
-        margin-bottom:.6rem;">
+        margin-bottom:.5rem;">
         <div style="
-            width:38px;height:38px;border-radius:12px;flex-shrink:0;
+            width:36px;height:36px;border-radius:11px;flex-shrink:0;
             background:linear-gradient(135deg,#FFA8D6,#838F58);
             display:flex;align-items:center;justify-content:center;
-            font-size:1.1rem;color:white;
-            box-shadow:0 6px 14px rgba(117,137,82,.20);">✿</div>
+            font-size:1rem;color:white;
+            box-shadow:0 5px 12px rgba(117,137,82,.20);">✿</div>
         <div>
-            <div style="font-size:.65rem;font-weight:700;
+            <div style="font-size:.62rem;font-weight:700;
                 letter-spacing:.08em;text-transform:uppercase;
-                color:#758952;line-height:1.2;">Capstone 27</div>
-            <div style="font-weight:900;font-size:.95rem;
+                color:#758952;line-height:1.3;">Capstone 27</div>
+            <div style="font-weight:900;font-size:.92rem;
                 color:#2F2330;line-height:1.2;">Beauty Match</div>
         </div>
     </div>
@@ -222,28 +227,74 @@ with st.sidebar:
         ("about",      "▤",  "About Method"),
     ]
 
+    # Render semua nav sekaligus dalam satu HTML block
+    # supaya spacing 100% konsisten, tanpa pengaruh margin Streamlit
+    current_page = st.session_state["page"]
+
+    nav_html = '<div style="display:flex;flex-direction:column;gap:2px;">'
+    for page_id, icon, label in nav_items:
+        is_active = current_page == page_id
+        if is_active:
+            bg = "linear-gradient(90deg,rgba(255,168,214,.82),rgba(249,209,217,.65))"
+            color = "#2F2330"
+            fw = "700"
+        else:
+            bg = "transparent"
+            color = "#758952"
+            fw = "600"
+        nav_html += f"""
+        <div onclick="window.location.href='?nav={page_id}'"
+            style="
+                display:flex;align-items:center;gap:8px;
+                padding:8px 10px;border-radius:8px;
+                background:{bg};color:{color};
+                font-size:13px;font-weight:{fw};
+                cursor:pointer;transition:background 0.15s;
+                user-select:none;">
+            <span>{icon}</span>
+            <span>{label}</span>
+        </div>"""
+    nav_html += '</div>'
+
+    # Render nav HTML — tapi onclick tidak bisa trigger Streamlit
+    # Jadi tetap pakai st.button tapi wrap dalam container zero-gap
+    st.markdown('</div>', unsafe_allow_html=True)  # tutup block container
+
+    # Pakai st.button dengan container CSS yang kita kontrol penuh
     for page_id, icon, label in nav_items:
         is_active = st.session_state["page"] == page_id
         if is_active:
-            st.markdown('<div class="nav-active">', unsafe_allow_html=True)
-        if st.button(
+            st.markdown(
+                f"""<div style="
+                    background:linear-gradient(90deg,rgba(255,168,214,.82),rgba(249,209,217,.65));
+                    border-radius:8px;margin:1px 0;padding:0;">""",
+                unsafe_allow_html=True
+            )
+        else:
+            st.markdown(
+                '<div style="margin:1px 0;padding:0;">',
+                unsafe_allow_html=True
+            )
+
+        clicked = st.button(
             f"{icon}  {label}",
             key=f"nav_{page_id}",
             use_container_width=True,
-        ):
+        )
+        if clicked:
             st.session_state["page"] = page_id
             st.rerun()
-        if is_active:
-            st.markdown('</div>', unsafe_allow_html=True)
+
+        st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown("""
     <div style="
-        position:fixed;bottom:1.5rem;left:1rem;width:178px;
-        text-align:center;padding:.8rem;
-        border-radius:.9rem;
+        position:fixed;bottom:1.4rem;left:.9rem;width:180px;
+        text-align:center;padding:.75rem;
+        border-radius:.85rem;
         background:rgba(212,235,194,.42);
         border:1px solid rgba(181,196,154,.38);
-        font-size:.72rem;color:#758952;line-height:1.6;">
+        font-size:.70rem;color:#758952;line-height:1.65;">
         Capstone Project 2026<br>
         <span style="color:#B8C4A0;">Beauty Tech Research Lab</span>
     </div>
