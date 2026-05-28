@@ -1,91 +1,21 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="ShadeMate",
+    page_title="Beauty Match",
     page_icon="🌸",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
+# ─── Lock sidebar dulu sebelum apapun ─────────────────────
 st.markdown("""
 <style>
-/* ── Lock sidebar ── */
 [data-testid="collapsedControl"] { display: none !important; }
-section[data-testid="stSidebar"] { 
+section[data-testid="stSidebar"] {
     transform: none !important;
     width: 210px !important;
     min-width: 210px !important;
-}
-
-/* ── Sembunyikan radio dot bawaan Streamlit ── */
-section[data-testid="stSidebar"] .stRadio label > div:first-child {
-    display: none !important;
-}
-section[data-testid="stSidebar"] .stRadio [data-baseweb="radio"] > div:first-child {
-    display: none !important;
-}
-section[data-testid="stSidebar"] .stRadio [data-testid="stWidgetLabel"] {
-    display: none !important;
-}
-/* Sembunyikan semua SVG circle di radio */
-section[data-testid="stSidebar"] .stRadio svg {
-    display: none !important;
-}
-section[data-testid="stSidebar"] .stRadio [role="radio"] {
-    display: none !important;
-}
-
-/* ── Label nav jadi full width terlihat ── */
-section[data-testid="stSidebar"] .stRadio label {
-    display: flex !important;
-    align-items: center !important;
-    width: 100% !important;
-    padding: 10px 14px !important;
-    border-radius: 12px !important;
-    font-size: 14px !important;
-    font-weight: 700 !important;
-    color: #758952 !important;
-    background: transparent !important;
-    border: none !important;
-    margin: 2px 0 !important;
-    cursor: pointer !important;
-    transition: all 0.18s !important;
-}
-section[data-testid="stSidebar"] .stRadio label:hover {
-    background: rgba(255,168,214,.25) !important;
-    color: #D94E91 !important;
-}
-section[data-testid="stSidebar"] .stRadio label:has(input:checked) {
-    background: linear-gradient(90deg, rgba(255,168,214,.82), rgba(249,209,217,.70)) !important;
-    color: #2F2330 !important;
-    box-shadow: 0 8px 18px rgba(248,138,189,.16) !important;
-}
-
-/* ── Sembunyikan input radio aslinya ── */
-section[data-testid="stSidebar"] .stRadio input[type="radio"] {
-    display: none !important;
-    width: 0 !important;
-    height: 0 !important;
-    position: absolute !important;
-}
-
-/* ── Flex column untuk daftar nav ── */
-section[data-testid="stSidebar"] .stRadio > div > div {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 2px !important;
-    width: 100% !important;
-}
-
-/* ── Teks label harus tampil ── */
-section[data-testid="stSidebar"] .stRadio label p,
-section[data-testid="stSidebar"] .stRadio label span {
-    display: inline !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    color: inherit !important;
-    font-size: 14px !important;
-    font-weight: 700 !important;
+    max-width: 210px !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -118,7 +48,7 @@ st.markdown("""
 #MainMenu, footer, header { visibility: hidden; }
 .stDeployButton { display: none; }
 
-/* ── Sidebar ── */
+/* ── Sidebar background ── */
 section[data-testid="stSidebar"] {
     background: linear-gradient(
         180deg,
@@ -128,79 +58,71 @@ section[data-testid="stSidebar"] {
     ) !important;
     border-right: 1px solid rgba(232,192,197,.70) !important;
     box-shadow: 12px 0 35px rgba(232,192,197,.16) !important;
-    min-width: 210px !important;
-    max-width: 210px !important;
 }
 section[data-testid="stSidebar"] > div:first-child {
     background: transparent !important;
-    padding-top: 1rem !important;
+    padding-top: 0.5rem !important;
 }
 section[data-testid="stSidebar"] .block-container {
-    padding: 1.2rem 1rem !important;
+    padding: 1rem 0.8rem !important;
     background: transparent !important;
 }
 
-/* ── Sidebar radio nav ── */
-section[data-testid="stSidebar"] .stRadio > div {
-    flex-direction: column;
-    gap: 2px;
-}
-section[data-testid="stSidebar"] .stRadio [role="radiogroup"] {
-    gap: 2px;
-}
-section[data-testid="stSidebar"] .stRadio input[type="radio"] {
-    display: none !important;
-}
-section[data-testid="stSidebar"] .stRadio [data-testid="stMarkdownContainer"] {
-    display: none !important;
-}
-section[data-testid="stSidebar"] .stRadio label {
+/* ── Nav buttons di sidebar ── */
+section[data-testid="stSidebar"] .stButton > button {
+    width: 100% !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
     background: transparent !important;
+    border: none !important;
     border-radius: 12px !important;
     padding: 10px 14px !important;
-    cursor: pointer;
-    font-size: 14px;
+    font-size: 14px !important;
     font-weight: 700 !important;
     color: #758952 !important;
-    transition: all 0.18s;
-    display: flex !important;
-    align-items: center;
-    width: 100%;
-    border: none !important;
-    margin: 1px 0;
+    box-shadow: none !important;
+    min-height: unset !important;
+    height: 42px !important;
+    margin: 1px 0 !important;
+    transition: all 0.18s !important;
+    transform: none !important;
 }
-section[data-testid="stSidebar"] .stRadio label:hover {
-    background: rgba(255,168,214,.25) !important;
+section[data-testid="stSidebar"] .stButton > button:hover {
+    background: rgba(255,168,214,.28) !important;
     color: #D94E91 !important;
+    transform: none !important;
+    box-shadow: none !important;
 }
-section[data-testid="stSidebar"] .stRadio label:has(input:checked) {
+
+/* ── Active nav button ── */
+section[data-testid="stSidebar"] .nav-active .stButton > button {
     background: linear-gradient(
         90deg,
         rgba(255,168,214,.82),
         rgba(249,209,217,.70)
     ) !important;
     color: #2F2330 !important;
-    box-shadow: 0 8px 18px rgba(248,138,189,.16) !important;
+    box-shadow: 0 6px 16px rgba(248,138,189,.18) !important;
 }
 
-/* ── Global buttons ── */
-.stButton > button {
+/* ── Global buttons (di luar sidebar) ── */
+.main .stButton > button {
     border-radius: 999px !important;
     font-weight: 700 !important;
     transition: all 0.2s !important;
     min-height: 46px !important;
 }
-.stButton > button:hover {
+.main .stButton > button:hover {
     transform: translateY(-1px) !important;
     box-shadow: 0 6px 18px rgba(192,88,126,.25) !important;
 }
-.stButton > button[kind="primary"] {
+.main .stButton > button[kind="primary"] {
     background: linear-gradient(135deg, #F48ABD, #D94E91) !important;
     color: white !important;
     border: none !important;
     box-shadow: 0 10px 22px rgba(217,78,145,.22) !important;
 }
-.stButton > button[kind="secondary"] {
+.main .stButton > button[kind="secondary"] {
     background: rgba(255,255,255,.75) !important;
     color: #758952 !important;
     border: 1.5px solid rgba(117,137,82,.55) !important;
@@ -277,13 +199,14 @@ section[data-testid="stSidebar"] .stRadio label:has(input:checked) {
 
 # ─── Sidebar ──────────────────────────────────────────────
 with st.sidebar:
+
     # Logo + brand
     st.markdown("""
     <div style="
         display:flex;align-items:center;gap:10px;
-        padding:.9rem .5rem 1.1rem;
+        padding:.7rem .3rem 1rem;
         border-bottom:1px solid rgba(232,192,197,.65);
-        margin-bottom:1.2rem;">
+        margin-bottom:1rem;">
         <div style="
             width:42px;height:42px;border-radius:15px;
             background:linear-gradient(135deg,#FFA8D6,#838F58);
@@ -291,53 +214,66 @@ with st.sidebar:
             font-size:1.2rem;color:white;
             box-shadow:0 8px 18px rgba(117,137,82,.22);">✿</div>
         <div>
-            <div style="font-size:.70rem;font-weight:700;
+            <div style="font-size:.68rem;font-weight:700;
                 letter-spacing:.08em;text-transform:uppercase;
                 color:#758952;">Capstone 27</div>
-            <div style="font-weight:900;font-size:1.1rem;
-                color:#2F2330;line-height:1.1;">Beauty Match</div>
+            <div style="font-weight:900;font-size:1.05rem;
+                color:#2F2330;line-height:1.15;">Beauty Match</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
-    nav_icons = {
-        "⌂  Home": "home",
-        "▣  Skin Analysis": "skin",
-        "▥  Results": "results",
-        "✧  Foundation": "foundation",
-        "▤  About Method": "about",
-    }
+    # Inisialisasi halaman
+    if "page" not in st.session_state:
+        st.session_state["page"] = "home"
 
-    # Sync navigasi dari tombol — harus SEBELUM st.radio
+    # Sync nav dari tombol halaman lain
     if "nav_target" in st.session_state:
-        target = st.session_state.pop("nav_target")
-        reverse = {v: k for k, v in nav_icons.items()}
-        if target in reverse:
-            st.session_state["main_nav"] = reverse[target]
+        st.session_state["page"] = st.session_state.pop("nav_target")
 
-    page_selected = st.radio(
-        "nav",
-        list(nav_icons.keys()),
-        label_visibility="collapsed",
-        key="main_nav",
-    )
-    page = nav_icons[page_selected]
+    # Daftar nav
+    nav_items = [
+        ("home",       "⌂",  "Home"),
+        ("skin",       "▣",  "Skin Analysis"),
+        ("results",    "▥",  "Results"),
+        ("foundation", "✧",  "Foundation"),
+        ("about",      "▤",  "About Method"),
+    ]
+
+    for page_id, icon, label in nav_items:
+        is_active = st.session_state["page"] == page_id
+
+        if is_active:
+            st.markdown('<div class="nav-active">', unsafe_allow_html=True)
+
+        if st.button(
+            f"{icon}  {label}",
+            key=f"nav_{page_id}",
+            use_container_width=True,
+        ):
+            st.session_state["page"] = page_id
+            st.rerun()
+
+        if is_active:
+            st.markdown('</div>', unsafe_allow_html=True)
 
     # Footer
     st.markdown("""
     <div style="
-        position:fixed;bottom:1.8rem;left:1.4rem;width:178px;
-        text-align:center;padding:1rem .8rem;
+        position:fixed;bottom:1.8rem;left:1.2rem;width:175px;
+        text-align:center;padding:.9rem .8rem;
         border-radius:1rem;
         background:rgba(212,235,194,.42);
         border:1px solid rgba(181,196,154,.40);
-        font-size:.76rem;color:#758952;line-height:1.6;">
+        font-size:.74rem;color:#758952;line-height:1.7;">
         Capstone Project 2026<br>
         <span style="color:#B8C4A0;">Beauty Tech Research Lab</span>
     </div>
     """, unsafe_allow_html=True)
 
 # ─── Route Pages ──────────────────────────────────────────
+page = st.session_state.get("page", "home")
+
 if page == "home":
     from pages_bm.home import render
     render()
