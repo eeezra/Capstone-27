@@ -7,6 +7,18 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+st.markdown("""
+<style>
+/* Paksa sidebar selalu terbuka dan sembunyikan tombol toggle */
+[data-testid="collapsedControl"] { display: none !important; }
+section[data-testid="stSidebar"] { 
+    transform: none !important;
+    width: 210px !important;
+    min-width: 210px !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # ─── Global CSS ───────────────────────────────────────────
 st.markdown("""
 <style>
