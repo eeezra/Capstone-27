@@ -1,78 +1,57 @@
 import streamlit as st
 
+# ======================================================
+# PAGE CONFIG
+# ======================================================
+
 st.set_page_config(
     page_title="Beauty Match",
     page_icon="🌸",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="expanded"
 )
 
-# =========================================================
+# ======================================================
+# SESSION STATE
+# ======================================================
+
+if "page" not in st.session_state:
+    st.session_state.page = "home"
+
+# ======================================================
 # GLOBAL CSS
-# =========================================================
+# ======================================================
 
 st.markdown("""
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap');
-
-*{
-    font-family:'Inter',sans-serif !important;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap');
 
 html, body, [class*="css"]{
-    color:#2F2330;
+    font-family:'Inter', sans-serif;
 }
 
-/* =========================================================
-MAIN APP
-========================================================= */
+/* ======================================================
+MAIN BACKGROUND
+====================================================== */
 
 .stApp{
     background:
-        radial-gradient(circle at 90% 8%, rgba(255,192,220,.28), transparent 18rem),
-        radial-gradient(circle at 8% 82%, rgba(212,235,194,.35), transparent 20rem),
+        radial-gradient(circle at 90% 8%, rgba(255,192,220,.22), transparent 18rem),
+        radial-gradient(circle at 8% 82%, rgba(212,235,194,.28), transparent 20rem),
         linear-gradient(
             135deg,
-            #FFF5F8 0%,
-            #FFF8F7 50%,
-            #FFF3F6 100%
-        ) !important;
+            #FFF7FA 0%,
+            #FFF9F8 50%,
+            #FFF4F7 100%
+        );
 
     overflow-x:hidden;
 }
 
-/* floating blobs */
-
-.stApp::before{
-    content:"";
-    position:fixed;
-    width:320px;
-    height:320px;
-    border-radius:50%;
-    background:rgba(212,235,194,.28);
-    left:-120px;
-    bottom:40px;
-    filter:blur(8px);
-    z-index:-1;
-}
-
-.stApp::after{
-    content:"";
-    position:fixed;
-    width:240px;
-    height:240px;
-    border-radius:50%;
-    background:rgba(255,192,220,.22);
-    right:-80px;
-    top:-40px;
-    filter:blur(8px);
-    z-index:-1;
-}
-
-/* =========================================================
+/* ======================================================
 STREAMLIT CLEANUP
-========================================================= */
+====================================================== */
 
 #MainMenu,
 footer,
@@ -80,88 +59,75 @@ header{
     visibility:hidden;
 }
 
-.stDeployButton{
+[data-testid="collapsedControl"]{
     display:none;
 }
 
-[data-testid="collapsedControl"]{
-    display:none !important;
-}
-
-section.main > div{
-    padding-top:0 !important;
-}
-
-/* =========================================================
-BLOCK CONTAINER
-========================================================= */
+/* ======================================================
+MAIN CONTAINER
+====================================================== */
 
 .main .block-container{
-    max-width:980px !important;
-
-    padding-top:.5rem !important;
-    padding-bottom:2rem !important;
-
-    margin:auto !important;
+    max-width:1050px;
+    padding-top:.7rem;
+    padding-bottom:2rem;
 }
 
-/* =========================================================
+/* ======================================================
 SIDEBAR
-========================================================= */
+====================================================== */
 
-section[data-testid="stSidebar"]{
-    width:170px !important;
-    min-width:170px !important;
-    max-width:170px !important;
+[data-testid="stSidebar"]{
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,240,245,.96) 0%,
+            rgba(255,240,245,.93) 60%,
+            rgba(219,236,195,.84) 100%
+        );
 
-    background:linear-gradient(
-        180deg,
-        rgba(255,240,245,.96) 0%,
-        rgba(255,240,245,.93) 65%,
-        rgba(212,235,194,.82) 100%
-    ) !important;
-
-    border-right:1px solid rgba(232,192,197,.55);
-
-    box-shadow:10px 0 30px rgba(232,192,197,.12);
+    border-right:1px solid rgba(240,190,210,.55);
 }
 
-section[data-testid="stSidebar"] .block-container{
-    padding:.8rem .7rem !important;
+[data-testid="stSidebar"] .block-container{
+    padding-top:1rem;
+    padding-left:.8rem;
+    padding-right:.8rem;
 }
 
-/* sidebar header */
+/* ======================================================
+SIDEBAR BRAND
+====================================================== */
 
-.sidebar-brand{
+.brand-wrap{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:12px;
 
-    padding:.5rem .2rem .9rem;
+    padding-bottom:1rem;
+    margin-bottom:1rem;
 
-    border-bottom:1px solid rgba(232,192,197,.45);
-
-    margin-bottom:.7rem;
+    border-bottom:1px solid rgba(240,190,210,.4);
 }
 
 .brand-icon{
-    width:34px;
-    height:34px;
+    width:38px;
+    height:38px;
 
-    border-radius:11px;
-
-    background:linear-gradient(
-        135deg,
-        #FFA8D6,
-        #838F58
-    );
+    border-radius:12px;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
+    background:linear-gradient(
+        135deg,
+        #F7A8CC,
+        #95A56A
+    );
+
     color:white;
-    font-size:.95rem;
+    font-size:1rem;
     font-weight:700;
 }
 
@@ -171,168 +137,116 @@ section[data-testid="stSidebar"] .block-container{
     letter-spacing:.08em;
     text-transform:uppercase;
 
-    color:#758952;
+    color:#7D8D5D;
 }
 
 .brand-big{
-    font-size:.92rem;
-    font-weight:900;
+    font-size:1rem;
+    font-weight:800;
 
     color:#2F2330;
 }
 
-/* sidebar buttons */
+/* ======================================================
+SIDEBAR BUTTONS
+====================================================== */
 
-section[data-testid="stSidebar"] .stButton{
-    margin:0 !important;
-    padding:0 !important;
+[data-testid="stSidebar"] .stButton{
+    margin-bottom:.35rem;
 }
 
-section[data-testid="stSidebar"] .stButton > button{
+[data-testid="stSidebar"] .stButton > button{
 
-    width:100% !important;
+    width:100%;
 
-    height:36px !important;
+    height:42px;
 
-    border:none !important;
+    border:none;
 
-    background:transparent !important;
+    border-radius:12px;
 
-    border-radius:10px !important;
+    background:transparent;
 
-    display:flex !important;
-    align-items:center !important;
-    justify-content:flex-start !important;
+    color:#72844F;
 
-    padding:0 .7rem !important;
+    font-size:.9rem;
+    font-weight:600;
 
-    color:#6F8150 !important;
+    text-align:left;
 
-    font-size:.82rem !important;
-    font-weight:600 !important;
+    justify-content:flex-start;
 
-    box-shadow:none !important;
-
-    transition:all .15s ease !important;
+    transition:all .15s ease;
 }
 
-section[data-testid="stSidebar"] .stButton > button:hover{
-    background:rgba(255,168,214,.18) !important;
-    color:#D94E91 !important;
+[data-testid="stSidebar"] .stButton > button:hover{
+
+    background:rgba(255,168,214,.18);
+
+    color:#D94E91;
 }
 
-.active-nav .stButton > button{
-    background:linear-gradient(
-        90deg,
-        rgba(255,168,214,.85),
-        rgba(249,209,217,.62)
-    ) !important;
+/* ======================================================
+MAIN BUTTONS
+====================================================== */
 
-    color:#2F2330 !important;
+.main .stButton > button{
 
-    font-weight:700 !important;
+    border-radius:999px;
+
+    height:48px;
+
+    font-weight:700;
+
+    font-size:.95rem;
+
+    border:none;
 }
 
-/* sidebar footer */
-
-.sidebar-footer{
-    position:fixed;
-
-    left:.8rem;
-    bottom:1rem;
-
-    width:145px;
-
-    padding:.75rem;
-
-    border-radius:14px;
-
-    background:rgba(212,235,194,.42);
-
-    border:1px solid rgba(181,196,154,.30);
-
-    text-align:center;
-
-    font-size:.66rem;
-    line-height:1.6;
-
-    color:#758952;
-}
-
-/* =========================================================
-GLOBAL BUTTONS
-========================================================= */
-
-div[data-testid="stAppViewContainer"] > .main .stButton > button{
-
-    border-radius:999px !important;
-
-    font-weight:700 !important;
-
-    height:46px !important;
-    min-height:46px !important;
-
-    font-size:.92rem !important;
-
-    transition:all .18s ease !important;
-}
-
-div[data-testid="stAppViewContainer"] > .main .stButton > button:hover{
-    transform:translateY(-1px);
-
-    box-shadow:0 8px 20px rgba(217,78,145,.16) !important;
-}
-
-div[data-testid="stAppViewContainer"] > .main .stButton > button[kind="primary"]{
+.main .stButton > button[kind="primary"]{
 
     background:linear-gradient(
         135deg,
-        #F48ABD,
+        #F58BBF,
         #D94E91
-    ) !important;
+    );
 
-    color:white !important;
-
-    border:none !important;
+    color:white;
 }
 
-div[data-testid="stAppViewContainer"] > .main .stButton > button[kind="secondary"]{
+.main .stButton > button[kind="secondary"]{
 
-    background:rgba(255,255,255,.72) !important;
+    background:white;
 
-    border:1.5px solid rgba(117,137,82,.45) !important;
+    border:1px solid rgba(125,141,93,.35);
 
-    color:#758952 !important;
+    color:#72844F;
 }
 
-/* =========================================================
+/* ======================================================
 SCROLLBAR
-========================================================= */
+====================================================== */
 
 ::-webkit-scrollbar{
-    width:5px;
-}
-
-::-webkit-scrollbar-track{
-    background:#FFF0F5;
+    width:6px;
 }
 
 ::-webkit-scrollbar-thumb{
-    background:#F4A0B8;
+    background:#F3A6C7;
     border-radius:999px;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
-# =========================================================
+# ======================================================
 # SIDEBAR
-# =========================================================
+# ======================================================
 
 with st.sidebar:
 
     st.markdown("""
-    <div class="sidebar-brand">
+    <div class="brand-wrap">
 
         <div class="brand-icon">
             ✿
@@ -340,7 +254,7 @@ with st.sidebar:
 
         <div>
             <div class="brand-small">
-                Capstone 27
+                CAPSTONE 27
             </div>
 
             <div class="brand-big">
@@ -351,68 +265,66 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-    if "page" not in st.session_state:
-        st.session_state.page = "home"
-
-    nav_items = [
-        ("home", "⌂  Home"),
-        ("skin", "▣  Skin Analysis"),
-        ("results", "▥  Results"),
-        ("foundation", "✧  Foundation"),
-        ("about", "▤  About Method"),
+    navs = [
+        ("home", "⌂ Home"),
+        ("skin", "◫ Skin Analysis"),
+        ("results", "▥ Results"),
+        ("foundation", "✧ Foundation"),
+        ("about", "☰ About Method"),
     ]
 
-    for page_id, label in nav_items:
+    for page_id, label in navs:
 
-        active = st.session_state.page == page_id
-
-        if active:
-            st.markdown('<div class="active-nav">', unsafe_allow_html=True)
-
-        clicked = st.button(
+        if st.button(
             label,
             key=f"nav_{page_id}",
             use_container_width=True
-        )
-
-        if active:
-            st.markdown('</div>', unsafe_allow_html=True)
-
-        if clicked:
+        ):
             st.session_state.page = page_id
             st.rerun()
 
+    st.markdown("<div style='height:3rem'></div>", unsafe_allow_html=True)
+
     st.markdown("""
-    <div class="sidebar-footer">
-        Capstone Project 2026<br>
-        <span style="opacity:.65">
-            Beauty Tech Research Lab
+    <div style="
+        background:rgba(212,235,194,.4);
+        padding:1rem;
+        border-radius:16px;
+        font-size:.72rem;
+        color:#7D8D5D;
+        text-align:center;
+        line-height:1.6;
+    ">
+        Beauty Match v1.0<br>
+        <span style="opacity:.7">
+            Capstone Project 2026
         </span>
     </div>
     """, unsafe_allow_html=True)
 
-# =========================================================
+# ======================================================
 # ROUTING
-# =========================================================
+# ======================================================
 
-page = st.session_state.get("page", "home")
+page = st.session_state.page
 
 if page == "home":
+
     from pages_bm.home import render
     render()
 
 elif page == "skin":
-    from pages_bm.skin_analysis import render
-    render()
+
+    st.title("Skin Analysis")
 
 elif page == "results":
-    from pages_bm.results import render
-    render()
+
+    st.title("Results")
 
 elif page == "foundation":
-    from pages_bm.foundation import render
-    render()
+
+    st.title("Foundation")
 
 elif page == "about":
-    from pages_bm.about_method import render
-    render()
+
+    st.title("About Method")
