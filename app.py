@@ -7,20 +7,18 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ─── Lock sidebar ─────────────────────────────────────────
 st.markdown("""
 <style>
 [data-testid="collapsedControl"] { display: none !important; }
 section[data-testid="stSidebar"] {
     transform: none !important;
-    width: 200px !important;
-    min-width: 200px !important;
-    max-width: 200px !important;
+    width: 210px !important;
+    min-width: 210px !important;
+    max-width: 210px !important;
 }
 </style>
 """, unsafe_allow_html=True)
 
-# ─── Global CSS ───────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap');
@@ -46,7 +44,7 @@ st.markdown("""
 #MainMenu, footer, header { visibility: hidden; }
 .stDeployButton { display: none; }
 
-/* ── Sidebar ── */
+/* ── Sidebar background ── */
 section[data-testid="stSidebar"] {
     background: linear-gradient(
         180deg,
@@ -62,52 +60,59 @@ section[data-testid="stSidebar"] > div:first-child {
     padding-top: 0 !important;
 }
 section[data-testid="stSidebar"] .block-container {
-    padding: 0.8rem 0.75rem !important;
+    padding: 0.8rem 0.7rem !important;
     background: transparent !important;
 }
 
-/* ── Sembunyikan semua elemen Streamlit di dalam sidebar
-      kecuali yang kita render sendiri ── */
-section[data-testid="stSidebar"] .stButton,
-section[data-testid="stSidebar"] .stButton > button,
+/* ── Hapus semua margin/padding bawaan stButton di sidebar ── */
+section[data-testid="stSidebar"] div[data-testid="stVerticalBlock"] {
+    gap: 0 !important;
+}
 section[data-testid="stSidebar"] div[data-testid="stVerticalBlock"] > div {
-    all: unset !important;
-    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+section[data-testid="stSidebar"] .stButton {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
 }
 section[data-testid="stSidebar"] .stButton > button {
-    display: none !important;
+    width: 100% !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 8px 10px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #758952 !important;
+    box-shadow: none !important;
+    min-height: unset !important;
+    height: 36px !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    transition: background 0.15s, color 0.15s !important;
+    transform: none !important;
 }
-
-/* ── Nav item HTML custom ── */
-.nav-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 9px 12px;
-    border-radius: 10px;
-    font-size: 13.5px;
-    font-weight: 600;
-    color: #758952;
-    cursor: pointer;
-    transition: background 0.15s, color 0.15s;
-    margin: 2px 0;
-    text-decoration: none;
-    user-select: none;
+section[data-testid="stSidebar"] .stButton > button:hover {
+    background: rgba(255,168,214,.28) !important;
+    color: #D94E91 !important;
+    transform: none !important;
+    box-shadow: none !important;
 }
-.nav-item:hover {
-    background: rgba(255,168,214,.28);
-    color: #D94E91;
-}
-.nav-item.active {
-    background: linear-gradient(90deg, rgba(255,168,214,.85), rgba(249,209,217,.70));
-    color: #2F2330;
-    font-weight: 700;
-}
-.nav-item .nav-icon {
-    font-size: 14px;
-    width: 18px;
-    text-align: center;
-    flex-shrink: 0;
+section[data-testid="stSidebar"] .nav-active .stButton > button {
+    background: linear-gradient(
+        90deg,
+        rgba(255,168,214,.82),
+        rgba(249,209,217,.65)
+    ) !important;
+    color: #2F2330 !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
 }
 
 /* ── Global buttons konten utama ── */
@@ -116,8 +121,6 @@ section[data-testid="stSidebar"] .stButton > button {
     font-weight: 700 !important;
     transition: all 0.2s !important;
     min-height: 44px !important;
-    display: inline-flex !important;
-    align-items: center !important;
 }
 .main .stButton > button:hover {
     transform: translateY(-1px) !important;
@@ -160,11 +163,14 @@ section[data-testid="stSidebar"] .stButton > button {
 .stTabs [data-baseweb="tab-highlight"],
 .stTabs [data-baseweb="tab-border"] { display: none !important; }
 
+/* ── Selectbox ── */
 .stSelectbox > div > div {
     border-radius: 10px !important;
     border-color: rgba(248,168,214,.50) !important;
     background: rgba(255,255,255,.80) !important;
 }
+
+/* ── Misc ── */
 .stFileUploader { border-radius: 14px !important; }
 .stDataFrame { border-radius: 12px !important; overflow: hidden !important; }
 .stSpinner > div { border-top-color: #D94E91 !important; }
@@ -174,38 +180,23 @@ section[data-testid="stSidebar"] .stButton > button {
     border: 1px solid rgba(248,168,214,.40) !important;
     font-weight: 600 !important;
 }
+
+/* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: #FFF0F5; }
 ::-webkit-scrollbar-thumb { background: #F4A0B8; border-radius: 999px; }
 </style>
 """, unsafe_allow_html=True)
 
-# ─── State management ─────────────────────────────────────
-if "page" not in st.session_state:
-    st.session_state["page"] = "home"
-if "nav_target" in st.session_state:
-    st.session_state["page"] = st.session_state.pop("nav_target")
-
-current_page = st.session_state["page"]
-
-nav_items = [
-    ("home",       "⌂", "Home"),
-    ("skin",       "▣", "Skin Analysis"),
-    ("results",    "▥", "Results"),
-    ("foundation", "✧", "Foundation"),
-    ("about",      "▤", "About Method"),
-]
-
 # ─── Sidebar ──────────────────────────────────────────────
 with st.sidebar:
 
-    # Logo
     st.markdown("""
     <div style="
         display:flex;align-items:center;gap:9px;
-        padding:.5rem .2rem .7rem;
+        padding:.6rem .2rem .75rem;
         border-bottom:1px solid rgba(232,192,197,.55);
-        margin-bottom:.6rem;">
+        margin-bottom:.5rem;">
         <div style="
             width:36px;height:36px;border-radius:11px;flex-shrink:0;
             background:linear-gradient(135deg,#FFA8D6,#838F58);
@@ -216,73 +207,114 @@ with st.sidebar:
             <div style="font-size:.62rem;font-weight:700;
                 letter-spacing:.08em;text-transform:uppercase;
                 color:#758952;line-height:1.3;">Capstone 27</div>
-            <div style="font-weight:900;font-size:.9rem;
+            <div style="font-weight:900;font-size:.92rem;
                 color:#2F2330;line-height:1.2;">Beauty Match</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
-    # Nav — render semua sebagai HTML murni + st.button tersembunyi
+    if "page" not in st.session_state:
+        st.session_state["page"] = "home"
+
+    if "nav_target" in st.session_state:
+        st.session_state["page"] = st.session_state.pop("nav_target")
+
+    nav_items = [
+        ("home",       "⌂",  "Home"),
+        ("skin",       "▣",  "Skin Analysis"),
+        ("results",    "▥",  "Results"),
+        ("foundation", "✧",  "Foundation"),
+        ("about",      "▤",  "About Method"),
+    ]
+
+    # Render semua nav sekaligus dalam satu HTML block
+    # supaya spacing 100% konsisten, tanpa pengaruh margin Streamlit
+    current_page = st.session_state["page"]
+
+    nav_html = '<div style="display:flex;flex-direction:column;gap:2px;">'
     for page_id, icon, label in nav_items:
         is_active = current_page == page_id
-        active_class = "active" if is_active else ""
-
-        # HTML nav item visual
-        st.markdown(f"""
-        <div class="nav-item {active_class}"
-             id="nav-{page_id}"
-             onclick="document.getElementById('btn-{page_id}').click()">
-            <span class="nav-icon">{icon}</span>
+        if is_active:
+            bg = "linear-gradient(90deg,rgba(255,168,214,.82),rgba(249,209,217,.65))"
+            color = "#2F2330"
+            fw = "700"
+        else:
+            bg = "transparent"
+            color = "#758952"
+            fw = "600"
+        nav_html += f"""
+        <div onclick="window.location.href='?nav={page_id}'"
+            style="
+                display:flex;align-items:center;gap:8px;
+                padding:8px 10px;border-radius:8px;
+                background:{bg};color:{color};
+                font-size:13px;font-weight:{fw};
+                cursor:pointer;transition:background 0.15s;
+                user-select:none;">
+            <span>{icon}</span>
             <span>{label}</span>
-        </div>
-        """, unsafe_allow_html=True)
+        </div>"""
+    nav_html += '</div>'
 
-        # Button tersembunyi yang trigger Streamlit
-        if st.button(label, key=f"btn_{page_id}", label_visibility="collapsed"):
+    # Render nav HTML — tapi onclick tidak bisa trigger Streamlit
+    # Jadi tetap pakai st.button tapi wrap dalam container zero-gap
+    st.markdown('</div>', unsafe_allow_html=True)  # tutup block container
+
+    # Pakai st.button dengan container CSS yang kita kontrol penuh
+    for page_id, icon, label in nav_items:
+        is_active = st.session_state["page"] == page_id
+        if is_active:
+            st.markdown(
+                f"""<div style="
+                    background:linear-gradient(90deg,rgba(255,168,214,.82),rgba(249,209,217,.65));
+                    border-radius:8px;margin:1px 0;padding:0;">""",
+                unsafe_allow_html=True
+            )
+        else:
+            st.markdown(
+                '<div style="margin:1px 0;padding:0;">',
+                unsafe_allow_html=True
+            )
+
+        clicked = st.button(
+            f"{icon}  {label}",
+            key=f"nav_{page_id}",
+            use_container_width=True,
+        )
+        if clicked:
             st.session_state["page"] = page_id
             st.rerun()
 
-    # Sembunyikan semua button bawaan Streamlit di sidebar
-    st.markdown("""
-    <style>
-    section[data-testid="stSidebar"] button {
-        position: absolute !important;
-        opacity: 0 !important;
-        width: 0 !important;
-        height: 0 !important;
-        pointer-events: none !important;
-        overflow: hidden !important;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
-    # Footer
     st.markdown("""
     <div style="
-        position:fixed;bottom:1.4rem;left:.9rem;width:178px;
+        position:fixed;bottom:1.4rem;left:.9rem;width:180px;
         text-align:center;padding:.75rem;
         border-radius:.85rem;
         background:rgba(212,235,194,.42);
         border:1px solid rgba(181,196,154,.38);
         font-size:.70rem;color:#758952;line-height:1.65;">
-        Beauty Match v1.0<br>
-        <span style="color:#B8C4A0;">Capstone Project 2026</span>
+        Capstone Project 2026<br>
+        <span style="color:#B8C4A0;">Beauty Tech Research Lab</span>
     </div>
     """, unsafe_allow_html=True)
 
 # ─── Route Pages ──────────────────────────────────────────
-if current_page == "home":
+page = st.session_state.get("page", "home")
+
+if page == "home":
     from pages_bm.home import render
     render()
-elif current_page == "skin":
+elif page == "skin":
     from pages_bm.skin_analysis import render
     render()
-elif current_page == "results":
+elif page == "results":
     from pages_bm.results import render
     render()
-elif current_page == "foundation":
+elif page == "foundation":
     from pages_bm.foundation import render
     render()
-elif current_page == "about":
+elif page == "about":
     from pages_bm.about_method import render
     render()
