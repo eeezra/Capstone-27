@@ -1,357 +1,418 @@
-```python
 import streamlit as st
 
-def render():
+st.set_page_config(
+    page_title="Beauty Match",
+    page_icon="🌸",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
+# =========================================================
+# GLOBAL CSS
+# =========================================================
+
+st.markdown("""
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap');
+
+*{
+    font-family:'Inter',sans-serif !important;
+}
+
+html, body, [class*="css"]{
+    color:#2F2330;
+}
+
+/* =========================================================
+MAIN APP
+========================================================= */
+
+.stApp{
+    background:
+        radial-gradient(circle at 90% 8%, rgba(255,192,220,.28), transparent 18rem),
+        radial-gradient(circle at 8% 82%, rgba(212,235,194,.35), transparent 20rem),
+        linear-gradient(
+            135deg,
+            #FFF5F8 0%,
+            #FFF8F7 50%,
+            #FFF3F6 100%
+        ) !important;
+
+    overflow-x:hidden;
+}
+
+/* floating blobs */
+
+.stApp::before{
+    content:"";
+    position:fixed;
+    width:320px;
+    height:320px;
+    border-radius:50%;
+    background:rgba(212,235,194,.28);
+    left:-120px;
+    bottom:40px;
+    filter:blur(8px);
+    z-index:-1;
+}
+
+.stApp::after{
+    content:"";
+    position:fixed;
+    width:240px;
+    height:240px;
+    border-radius:50%;
+    background:rgba(255,192,220,.22);
+    right:-80px;
+    top:-40px;
+    filter:blur(8px);
+    z-index:-1;
+}
+
+/* =========================================================
+STREAMLIT CLEANUP
+========================================================= */
+
+#MainMenu,
+footer,
+header{
+    visibility:hidden;
+}
+
+.stDeployButton{
+    display:none;
+}
+
+[data-testid="collapsedControl"]{
+    display:none !important;
+}
+
+section.main > div{
+    padding-top:0 !important;
+}
+
+/* =========================================================
+BLOCK CONTAINER
+========================================================= */
+
+.main .block-container{
+    max-width:980px !important;
+
+    padding-top:.5rem !important;
+    padding-bottom:2rem !important;
+
+    margin:auto !important;
+}
+
+/* =========================================================
+SIDEBAR
+========================================================= */
+
+section[data-testid="stSidebar"]{
+    width:170px !important;
+    min-width:170px !important;
+    max-width:170px !important;
+
+    background:linear-gradient(
+        180deg,
+        rgba(255,240,245,.96) 0%,
+        rgba(255,240,245,.93) 65%,
+        rgba(212,235,194,.82) 100%
+    ) !important;
+
+    border-right:1px solid rgba(232,192,197,.55);
+
+    box-shadow:10px 0 30px rgba(232,192,197,.12);
+}
+
+section[data-testid="stSidebar"] .block-container{
+    padding:.8rem .7rem !important;
+}
+
+/* sidebar header */
+
+.sidebar-brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:.5rem .2rem .9rem;
+
+    border-bottom:1px solid rgba(232,192,197,.45);
+
+    margin-bottom:.7rem;
+}
+
+.brand-icon{
+    width:34px;
+    height:34px;
+
+    border-radius:11px;
+
+    background:linear-gradient(
+        135deg,
+        #FFA8D6,
+        #838F58
+    );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:white;
+    font-size:.95rem;
+    font-weight:700;
+}
+
+.brand-small{
+    font-size:.58rem;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+
+    color:#758952;
+}
+
+.brand-big{
+    font-size:.92rem;
+    font-weight:900;
+
+    color:#2F2330;
+}
+
+/* sidebar buttons */
+
+section[data-testid="stSidebar"] .stButton{
+    margin:0 !important;
+    padding:0 !important;
+}
+
+section[data-testid="stSidebar"] .stButton > button{
+
+    width:100% !important;
+
+    height:36px !important;
+
+    border:none !important;
+
+    background:transparent !important;
+
+    border-radius:10px !important;
+
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+
+    padding:0 .7rem !important;
+
+    color:#6F8150 !important;
+
+    font-size:.82rem !important;
+    font-weight:600 !important;
+
+    box-shadow:none !important;
+
+    transition:all .15s ease !important;
+}
+
+section[data-testid="stSidebar"] .stButton > button:hover{
+    background:rgba(255,168,214,.18) !important;
+    color:#D94E91 !important;
+}
+
+.active-nav .stButton > button{
+    background:linear-gradient(
+        90deg,
+        rgba(255,168,214,.85),
+        rgba(249,209,217,.62)
+    ) !important;
+
+    color:#2F2330 !important;
+
+    font-weight:700 !important;
+}
+
+/* sidebar footer */
+
+.sidebar-footer{
+    position:fixed;
+
+    left:.8rem;
+    bottom:1rem;
+
+    width:145px;
+
+    padding:.75rem;
+
+    border-radius:14px;
+
+    background:rgba(212,235,194,.42);
+
+    border:1px solid rgba(181,196,154,.30);
+
+    text-align:center;
+
+    font-size:.66rem;
+    line-height:1.6;
+
+    color:#758952;
+}
+
+/* =========================================================
+GLOBAL BUTTONS
+========================================================= */
+
+.main .stButton > button{
+
+    border-radius:999px !important;
+
+    font-weight:700 !important;
+
+    height:46px !important;
+    min-height:46px !important;
+
+    font-size:.92rem !important;
+
+    transition:all .18s ease !important;
+}
+
+.main .stButton > button:hover{
+    transform:translateY(-1px);
+
+    box-shadow:0 8px 20px rgba(217,78,145,.16) !important;
+}
+
+.main .stButton > button[kind="primary"]{
+
+    background:linear-gradient(
+        135deg,
+        #F48ABD,
+        #D94E91
+    ) !important;
+
+    color:white !important;
+
+    border:none !important;
+}
+
+.main .stButton > button[kind="secondary"]{
+
+    background:rgba(255,255,255,.72) !important;
+
+    border:1.5px solid rgba(117,137,82,.45) !important;
+
+    color:#758952 !important;
+}
+
+/* =========================================================
+SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar{
+    width:5px;
+}
+
+::-webkit-scrollbar-track{
+    background:#FFF0F5;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#F4A0B8;
+    border-radius:999px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+# =========================================================
+SIDEBAR
+# =========================================================
+
+with st.sidebar:
 
     st.markdown("""
-    <style>
+    <div class="sidebar-brand">
 
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&display=swap');
-
-    /* =========================================================
-    HERO
-    ========================================================= */
-
-    .hero-wrap{
-        text-align:center;
-
-        padding-top:1.4rem;
-    }
-
-    .hero-pill{
-
-        display:inline-flex;
-        align-items:center;
-        gap:.45rem;
-
-        padding:.45rem 1.15rem;
-
-        border-radius:999px;
-
-        background:rgba(249,209,217,.45);
-
-        border:1px solid rgba(255,168,214,.60);
-
-        color:#D94E91;
-
-        font-size:.78rem;
-        font-weight:800;
-
-        letter-spacing:.04em;
-
-        margin-bottom:1.6rem;
-    }
-
-    .hero-title{
-
-        font-family:'Playfair Display', serif !important;
-
-        font-size:clamp(3rem, 5vw, 5rem);
-
-        font-weight:800;
-
-        line-height:1.03;
-
-        letter-spacing:-.04em;
-
-        color:#2F2330;
-
-        max-width:760px;
-
-        margin:auto auto 1.1rem auto;
-    }
-
-    .hero-title .pink{
-        color:#D94E91;
-    }
-
-    .hero-title .olive{
-        color:#838F58;
-    }
-
-    .hero-sub{
-
-        max-width:430px;
-
-        margin:auto auto 2rem auto;
-
-        font-size:1rem;
-
-        line-height:1.9;
-
-        color:#7B6472;
-    }
-
-    /* =========================================================
-    FEATURE CARDS
-    ========================================================= */
-
-    .cards-wrap{
-        max-width:900px;
-        margin:auto;
-    }
-
-    .feat-card{
-
-        border-radius:28px;
-
-        padding:1.3rem 1.2rem;
-
-        min-height:190px;
-
-        border:1px solid rgba(248,168,214,.26);
-
-        box-shadow:0 12px 30px rgba(200,107,133,.07);
-
-        backdrop-filter:blur(10px);
-    }
-
-    .feat-icon{
-
-        width:42px;
-        height:42px;
-
-        border-radius:14px;
-
-        display:flex;
-        align-items:center;
-        justify-content:center;
-
-        font-size:1rem;
-
-        margin-bottom:1rem;
-    }
-
-    .feat-title{
-
-        font-size:1rem;
-        font-weight:800;
-
-        color:#2F2330;
-
-        margin-bottom:.5rem;
-    }
-
-    .feat-desc{
-
-        font-size:.88rem;
-
-        line-height:1.8;
-
-        color:#7B6472;
-    }
-
-    /* =========================================================
-    STATS BAR
-    ========================================================= */
-
-    .stats-bar{
-
-        display:grid;
-        grid-template-columns:repeat(4,1fr);
-
-        max-width:760px;
-
-        margin:2rem auto 0 auto;
-
-        border-radius:20px;
-
-        overflow:hidden;
-
-        background:linear-gradient(
-            90deg,
-            rgba(255,240,245,.92),
-            rgba(212,235,194,.72)
-        );
-
-        border:1px solid rgba(248,168,214,.18);
-
-        box-shadow:0 10px 24px rgba(200,107,133,.06);
-    }
-
-    .stat-cell{
-
-        padding:1.3rem .7rem;
-
-        text-align:center;
-
-        border-right:1px solid rgba(248,168,214,.15);
-    }
-
-    .stat-cell:last-child{
-        border-right:none;
-    }
-
-    .stat-num{
-
-        font-family:'Playfair Display', serif !important;
-
-        font-size:2rem;
-
-        font-weight:800;
-
-        line-height:1;
-
-        color:#2F2330;
-    }
-
-    .stat-lbl{
-
-        margin-top:.35rem;
-
-        font-size:.78rem;
-
-        color:#7B6472;
-
-        font-weight:500;
-    }
-
-    </style>
-    """, unsafe_allow_html=True)
-
-    # =========================================================
-    HERO
-    # =========================================================
-
-    st.markdown("""
-    <div class="hero-wrap">
-
-        <div class="hero-pill">
-            ✦ AI-Powered Foundation Matching ✦
+        <div class="brand-icon">
+            ✿
         </div>
 
-        <div class="hero-title">
-            Find Your Perfect
-            <span class="pink">Foundation</span><br>
-            <span class="olive">Match</span>
-        </div>
+        <div>
+            <div class="brand-small">
+                Capstone 27
+            </div>
 
-        <div class="hero-sub">
-            Analyze your skin tone and undertone to discover
-            foundation shades that suit you — powered by
-            computer vision and color science.
+            <div class="brand-big">
+                Beauty Match
+            </div>
         </div>
 
     </div>
     """, unsafe_allow_html=True)
 
-    # =========================================================
-    CTA BUTTONS
-    # =========================================================
+    if "page" not in st.session_state:
+        st.session_state.page = "home"
 
-    _, col1, col2, _ = st.columns([2.2, .95, .95, 2.2])
-
-    with col1:
-        if st.button(
-            "▶ Start Analysis",
-            type="primary",
-            use_container_width=True,
-            key="hero_start"
-        ):
-            st.session_state.page = "skin"
-            st.rerun()
-
-    with col2:
-        if st.button(
-            "How It Works",
-            type="secondary",
-            use_container_width=True,
-            key="hero_about"
-        ):
-            st.session_state.page = "about"
-            st.rerun()
-
-    st.markdown("<div style='height:1.6rem'></div>", unsafe_allow_html=True)
-
-    # =========================================================
-    FEATURE CARDS
-    # =========================================================
-
-    st.markdown('<div class="cards-wrap">', unsafe_allow_html=True)
-
-    c1, c2, c3 = st.columns(3, gap="medium")
-
-    cards = [
-
-        (
-            "#FFF2F7",
-            "rgba(255,168,214,.28)",
-            "📷",
-            "Upload Photo",
-            "Use your own photo or capture one live with your webcam. We analyze your skin directly."
-        ),
-
-        (
-            "#EEF4E8",
-            "rgba(186,223,147,.42)",
-            "📊",
-            "Skin Tone Analysis",
-            "Get your skin tone, undertone classification, and Monk Skin Tone scale score instantly."
-        ),
-
-        (
-            "#FFF2F7",
-            "rgba(255,168,214,.22)",
-            "✨",
-            "Foundation Recommendation",
-            "Matched foundations are ranked by Euclidean color distance for the most accurate shade."
-        ),
+    nav_items = [
+        ("home", "⌂  Home"),
+        ("skin", "▣  Skin Analysis"),
+        ("results", "▥  Results"),
+        ("foundation", "✧  Foundation"),
+        ("about", "▤  About Method"),
     ]
 
-    for col, (bg, icon_bg, icon, title, desc) in zip([c1,c2,c3], cards):
+    for page_id, label in nav_items:
 
-        with col:
+        active = st.session_state.page == page_id
 
-            st.markdown(f"""
-            <div class="feat-card" style="background:{bg};">
+        if active:
+            st.markdown('<div class="active-nav">', unsafe_allow_html=True)
 
-                <div class="feat-icon"
-                    style="background:{icon_bg};">
-                    {icon}
-                </div>
+        clicked = st.button(
+            label,
+            key=f"nav_{page_id}",
+            use_container_width=True
+        )
 
-                <div class="feat-title">
-                    {title}
-                </div>
+        if active:
+            st.markdown('</div>', unsafe_allow_html=True)
 
-                <div class="feat-desc">
-                    {desc}
-                </div>
-
-            </div>
-            """, unsafe_allow_html=True)
-
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    # =========================================================
-    STATS BAR
-    # =========================================================
+        if clicked:
+            st.session_state.page = page_id
+            st.rerun()
 
     st.markdown("""
-
-    <div class="stats-bar">
-
-        <div class="stat-cell">
-            <div class="stat-num">50+</div>
-            <div class="stat-lbl">Foundation Shades</div>
-        </div>
-
-        <div class="stat-cell">
-            <div class="stat-num">10</div>
-            <div class="stat-lbl">Brands Covered</div>
-        </div>
-
-        <div class="stat-cell">
-            <div class="stat-num">99%</div>
-            <div class="stat-lbl">Detection Accuracy</div>
-        </div>
-
-        <div class="stat-cell">
-            <div class="stat-num">&lt; 2s</div>
-            <div class="stat-lbl">Analysis Time</div>
-        </div>
-
+    <div class="sidebar-footer">
+        Capstone Project 2026<br>
+        <span style="opacity:.65">
+            Beauty Tech Research Lab
+        </span>
     </div>
-
     """, unsafe_allow_html=True)
-```
+
+# =========================================================
+ROUTING
+# =========================================================
+
+page = st.session_state.get("page", "home")
+
+if page == "home":
+    from pages_bm.home import render
+    render()
+
+elif page == "skin":
+    from pages_bm.skin_analysis import render
+    render()
+
+elif page == "results":
+    from pages_bm.results import render
+    render()
+
+elif page == "foundation":
+    from pages_bm.foundation import render
+    render()
+
+elif page == "about":
+    from pages_bm.about_method import render
+    render()
