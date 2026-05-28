@@ -1,4 +1,3 @@
-```python
 import streamlit as st
 
 st.set_page_config(
@@ -417,4 +416,3 @@ elif page == "foundation":
 elif page == "about":
     from pages_bm.about_method import render
     render()
-```
