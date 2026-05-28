@@ -1,326 +1,357 @@
+```python
 import streamlit as st
 
-st.set_page_config(
-    page_title="Beauty Match",
-    page_icon="🌸",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
-
-# =========================================================
-# GLOBAL CSS
-# =========================================================
-
-st.markdown("""
-<style>
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap');
-
-*{
-    font-family:'Inter',sans-serif !important;
-}
-
-html, body, [class*="css"]{
-    color:#2F2330;
-}
-
-/* =========================================================
-MAIN APP
-========================================================= */
-
-.stApp{
-    background:
-        radial-gradient(circle at 90% 8%, rgba(255,192,220,.28), transparent 18rem),
-        radial-gradient(circle at 8% 82%, rgba(212,235,194,.35), transparent 20rem),
-        linear-gradient(
-            135deg,
-            #FFF5F8 0%,
-            #FFF8F7 50%,
-            #FFF3F6 100%
-        ) !important;
-
-    overflow-x:hidden;
-}
-
-/* floating blobs */
-
-.stApp::before{
-    content:"";
-    position:fixed;
-    width:320px;
-    height:320px;
-    border-radius:50%;
-    background:rgba(212,235,194,.28);
-    left:-120px;
-    bottom:40px;
-    filter:blur(8px);
-    z-index:-1;
-}
-
-.stApp::after{
-    content:"";
-    position:fixed;
-    width:240px;
-    height:240px;
-    border-radius:50%;
-    background:rgba(255,192,220,.22);
-    right:-80px;
-    top:-40px;
-    filter:blur(8px);
-    z-index:-1;
-}
-
-/* =========================================================
-STREAMLIT CLEANUP
-========================================================= */
-
-#MainMenu,
-footer,
-header{
-    visibility:hidden;
-}
-
-.stDeployButton{
-    display:none;
-}
-
-[data-testid="collapsedControl"]{
-    display:none !important;
-}
-
-section.main > div{
-    padding-top:0 !important;
-}
-
-/* =========================================================
-BLOCK CONTAINER
-========================================================= */
-
-.main .block-container{
-    max-width:980px !important;
-
-    padding-top:.5rem !important;
-    padding-bottom:2rem !important;
+def render():
 
-    margin:auto !important;
-}
+    st.markdown("""
+    <style>
 
-/* =========================================================
-SIDEBAR
-========================================================= */
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&display=swap');
 
-section[data-testid="stSidebar"]{
-    width:170px !important;
-    min-width:170px !important;
-    max-width:170px !important;
+    /* =========================================================
+    HERO
+    ========================================================= */
 
-    background:linear-gradient(
-        180deg,
-        rgba(255,240,245,.96) 0%,
-        rgba(255,240,245,.93) 65%,
-        rgba(212,235,194,.82) 100%
-    ) !important;
+    .hero-wrap{
+        text-align:center;
 
-    border-right:1px solid rgba(232,192,197,.55);
+        padding-top:1.4rem;
+    }
 
-    box-shadow:10px 0 30px rgba(232,192,197,.12);
-}
+    .hero-pill{
 
-section[data-testid="stSidebar"] .block-container{
-    padding:.8rem .7rem !important;
-}
+        display:inline-flex;
+        align-items:center;
+        gap:.45rem;
 
-/* sidebar header */
+        padding:.45rem 1.15rem;
 
-.sidebar-brand{
-    display:flex;
-    align-items:center;
-    gap:10px;
+        border-radius:999px;
 
-    padding:.5rem .2rem .9rem;
+        background:rgba(249,209,217,.45);
 
-    border-bottom:1px solid rgba(232,192,197,.45);
+        border:1px solid rgba(255,168,214,.60);
 
-    margin-bottom:.7rem;
-}
+        color:#D94E91;
 
-.brand-icon{
-    width:34px;
-    height:34px;
+        font-size:.78rem;
+        font-weight:800;
 
-    border-radius:11px;
+        letter-spacing:.04em;
 
-    background:linear-gradient(
-        135deg,
-        #FFA8D6,
-        #838F58
-    );
+        margin-bottom:1.6rem;
+    }
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    .hero-title{
 
-    color:white;
-    font-size:.95rem;
-    font-weight:700;
-}
+        font-family:'Playfair Display', serif !important;
 
-.brand-small{
-    font-size:.58rem;
-    font-weight:800;
-    letter-spacing:.08em;
-    text-transform:uppercase;
+        font-size:clamp(3rem, 5vw, 5rem);
 
-    color:#758952;
-}
+        font-weight:800;
 
-.brand-big{
-    font-size:.92rem;
-    font-weight:900;
+        line-height:1.03;
 
-    color:#2F2330;
-}
+        letter-spacing:-.04em;
 
-/* sidebar buttons */
+        color:#2F2330;
 
-section[data-testid="stSidebar"] .stButton{
-    margin:0 !important;
-    padding:0 !important;
-}
+        max-width:760px;
 
-section[data-testid="stSidebar"] .stButton > button{
+        margin:auto auto 1.1rem auto;
+    }
 
-    width:100% !important;
+    .hero-title .pink{
+        color:#D94E91;
+    }
 
-    height:36px !important;
+    .hero-title .olive{
+        color:#838F58;
+    }
 
-    border:none !important;
+    .hero-sub{
 
-    background:transparent !important;
+        max-width:430px;
 
-    border-radius:10px !important;
+        margin:auto auto 2rem auto;
 
-    display:flex !important;
-    align-items:center !important;
-    justify-content:flex-start !important;
+        font-size:1rem;
 
-    padding:0 .7rem !important;
+        line-height:1.9;
 
-    color:#6F8150 !important;
+        color:#7B6472;
+    }
 
-    font-size:.82rem !important;
-    font-weight:600 !important;
+    /* =========================================================
+    FEATURE CARDS
+    ========================================================= */
 
-    box-shadow:none !important;
+    .cards-wrap{
+        max-width:900px;
+        margin:auto;
+    }
 
-    transition:all .15s ease !important;
-}
+    .feat-card{
 
-section[data-testid="stSidebar"] .stButton > button:hover{
-    background:rgba(255,168,214,.18) !important;
-    color:#D94E91 !important;
-}
+        border-radius:28px;
 
-.active-nav .stButton > button{
-    background:linear-gradient(
-        90deg,
-        rgba(255,168,214,.85),
-        rgba(249,209,217,.62)
-    ) !important;
+        padding:1.3rem 1.2rem;
 
-    color:#2F2330 !important;
+        min-height:190px;
 
-    font-weight:700 !important;
-}
+        border:1px solid rgba(248,168,214,.26);
 
-/* sidebar footer */
+        box-shadow:0 12px 30px rgba(200,107,133,.07);
 
-.sidebar-footer{
-    position:fixed;
+        backdrop-filter:blur(10px);
+    }
 
-    left:.8rem;
-    bottom:1rem;
+    .feat-icon{
 
-    width:145px;
+        width:42px;
+        height:42px;
 
-    padding:.75rem;
+        border-radius:14px;
 
-    border-radius:14px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
 
-    background:rgba(212,235,194,.42);
+        font-size:1rem;
 
-    border:1px solid rgba(181,196,154,.30);
+        margin-bottom:1rem;
+    }
 
-    text-align:center;
+    .feat-title{
 
-    font-size:.66rem;
-    line-height:1.6;
+        font-size:1rem;
+        font-weight:800;
 
-    color:#758952;
-}
+        color:#2F2330;
 
-/* =========================================================
-GLOBAL BUTTONS
-========================================================= */
+        margin-bottom:.5rem;
+    }
 
-.main .stButton > button{
+    .feat-desc{
 
-    border-radius:999px !important;
+        font-size:.88rem;
 
-    font-weight:700 !important;
+        line-height:1.8;
 
-    height:46px !important;
-    min-height:46px !important;
+        color:#7B6472;
+    }
 
-    font-size:.92rem !important;
+    /* =========================================================
+    STATS BAR
+    ========================================================= */
 
-    transition:all .18s ease !important;
-}
+    .stats-bar{
 
-.main .stButton > button:hover{
-    transform:translateY(-1px);
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
 
-    box-shadow:0 8px 20px rgba(217,78,145,.16) !important;
-}
+        max-width:760px;
 
-.main .stButton > button[kind="primary"]{
+        margin:2rem auto 0 auto;
 
-    background:linear-gradient(
-        135deg,
-        #F48ABD,
-        #D94E91
-    ) !important;
+        border-radius:20px;
 
-    color:white !important;
+        overflow:hidden;
 
-    border:none !important;
-}
+        background:linear-gradient(
+            90deg,
+            rgba(255,240,245,.92),
+            rgba(212,235,194,.72)
+        );
 
-.main .stButton > button[kind="secondary"]{
+        border:1px solid rgba(248,168,214,.18);
 
-    background:rgba(255,255,255,.72) !important;
+        box-shadow:0 10px 24px rgba(200,107,133,.06);
+    }
 
-    border:1.5px solid rgba(117,137,82,.45) !important;
+    .stat-cell{
 
-    color:#758952 !important;
-}
+        padding:1.3rem .7rem;
 
-/* =========================================================
-SCROLLBAR
-========================================================= */
+        text-align:center;
 
-::-webkit-scrollbar{
-    width:5px;
-}
+        border-right:1px solid rgba(248,168,214,.15);
+    }
 
-::-webkit-scrollbar-track{
-    background:#FFF0F5;
-}
+    .stat-cell:last-child{
+        border-right:none;
+    }
 
-::-webkit-scrollbar-thumb{
-    background:#F4A0B8;
-    border-radius:999px;
-}
+    .stat-num{
 
-</style>
-""", unsafe_allow_html=True)
+        font-family:'Playfair Display', serif !important;
+
+        font-size:2rem;
+
+        font-weight:800;
+
+        line-height:1;
+
+        color:#2F2330;
+    }
+
+    .stat-lbl{
+
+        margin-top:.35rem;
+
+        font-size:.78rem;
+
+        color:#7B6472;
+
+        font-weight:500;
+    }
+
+    </style>
+    """, unsafe_allow_html=True)
+
+    # =========================================================
+    HERO
+    # =========================================================
+
+    st.markdown("""
+    <div class="hero-wrap">
+
+        <div class="hero-pill">
+            ✦ AI-Powered Foundation Matching ✦
+        </div>
+
+        <div class="hero-title">
+            Find Your Perfect
+            <span class="pink">Foundation</span><br>
+            <span class="olive">Match</span>
+        </div>
+
+        <div class="hero-sub">
+            Analyze your skin tone and undertone to discover
+            foundation shades that suit you — powered by
+            computer vision and color science.
+        </div>
+
+    </div>
+    """, unsafe_allow_html=True)
+
+    # =========================================================
+    CTA BUTTONS
+    # =========================================================
+
+    _, col1, col2, _ = st.columns([2.2, .95, .95, 2.2])
+
+    with col1:
+        if st.button(
+            "▶ Start Analysis",
+            type="primary",
+            use_container_width=True,
+            key="hero_start"
+        ):
+            st.session_state.page = "skin"
+            st.rerun()
+
+    with col2:
+        if st.button(
+            "How It Works",
+            type="secondary",
+            use_container_width=True,
+            key="hero_about"
+        ):
+            st.session_state.page = "about"
+            st.rerun()
+
+    st.markdown("<div style='height:1.6rem'></div>", unsafe_allow_html=True)
+
+    # =========================================================
+    FEATURE CARDS
+    # =========================================================
+
+    st.markdown('<div class="cards-wrap">', unsafe_allow_html=True)
+
+    c1, c2, c3 = st.columns(3, gap="medium")
+
+    cards = [
+
+        (
+            "#FFF2F7",
+            "rgba(255,168,214,.28)",
+            "📷",
+            "Upload Photo",
+            "Use your own photo or capture one live with your webcam. We analyze your skin directly."
+        ),
+
+        (
+            "#EEF4E8",
+            "rgba(186,223,147,.42)",
+            "📊",
+            "Skin Tone Analysis",
+            "Get your skin tone, undertone classification, and Monk Skin Tone scale score instantly."
+        ),
+
+        (
+            "#FFF2F7",
+            "rgba(255,168,214,.22)",
+            "✨",
+            "Foundation Recommendation",
+            "Matched foundations are ranked by Euclidean color distance for the most accurate shade."
+        ),
+    ]
+
+    for col, (bg, icon_bg, icon, title, desc) in zip([c1,c2,c3], cards):
+
+        with col:
+
+            st.markdown(f"""
+            <div class="feat-card" style="background:{bg};">
+
+                <div class="feat-icon"
+                    style="background:{icon_bg};">
+                    {icon}
+                </div>
+
+                <div class="feat-title">
+                    {title}
+                </div>
+
+                <div class="feat-desc">
+                    {desc}
+                </div>
+
+            </div>
+            """, unsafe_allow_html=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # =========================================================
+    STATS BAR
+    # =========================================================
+
+    st.markdown("""
+
+    <div class="stats-bar">
+
+        <div class="stat-cell">
+            <div class="stat-num">50+</div>
+            <div class="stat-lbl">Foundation Shades</div>
+        </div>
+
+        <div class="stat-cell">
+            <div class="stat-num">10</div>
+            <div class="stat-lbl">Brands Covered</div>
+        </div>
+
+        <div class="stat-cell">
+            <div class="stat-num">99%</div>
+            <div class="stat-lbl">Detection Accuracy</div>
+        </div>
+
+        <div class="stat-cell">
+            <div class="stat-num">&lt; 2s</div>
+            <div class="stat-lbl">Analysis Time</div>
+        </div>
+
+    </div>
+
+    """, unsafe_allow_html=True)
+```
