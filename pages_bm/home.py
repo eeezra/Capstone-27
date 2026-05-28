@@ -3,50 +3,148 @@ import streamlit as st
 def render():
     st.markdown("""
     <style>
-    .hero-badge {
-        display:inline-flex;align-items:center;gap:6px;
-        background:#fff0f5;color:#c0587e;
-        border-radius:999px;padding:6px 18px;
-        font-size:13px;font-weight:600;
-        margin-bottom:20px;
-        border:1px solid #f9d0de;
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap');
+
+    /* ── Background radial gradients persis seperti desain ── */
+    .stApp {
+        background:
+            radial-gradient(circle at 88% 8%,  rgba(255,168,214,.38), transparent 22rem),
+            radial-gradient(circle at 6%  82%,  rgba(212,235,194,.50), transparent 22rem),
+            linear-gradient(135deg, #FFF0F5 0%, #FFF8F6 50%, #F9EEF2 100%) !important;
     }
+    .main, .main .block-container {
+        background: transparent !important;
+    }
+
+    /* ── Hero pill badge ── */
+    .hero-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: .4rem;
+        padding: .45rem 1.1rem;
+        border-radius: 999px;
+        background: rgba(249,209,217,.55);
+        color: #D94E91;
+        border: 1px solid rgba(255,168,214,.70);
+        font-weight: 800;
+        font-size: .80rem;
+        letter-spacing: .04em;
+        margin-bottom: 1.4rem;
+    }
+
+    /* ── Hero title — Playfair Display ── */
     .hero-title {
-        font-size:clamp(30px,5vw,50px);
-        font-weight:800;line-height:1.15;
-        color:#1a1a1a;margin-bottom:16px;
+        font-family: 'Playfair Display', serif !important;
+        font-size: clamp(2.4rem, 4vw, 4.2rem);
+        font-weight: 800;
+        line-height: 1.08;
+        letter-spacing: -.02em;
+        color: #2F2330;
+        margin: 0 0 1rem;
     }
-    .hero-title span { color:#c0587e; }
+    .hero-title .pink  { color: #D94E91; }
+    .hero-title .olive { color: #838F58; }
+
+    /* ── Subtitle ── */
     .hero-sub {
-        font-size:15px;color:#777;
-        max-width:520px;margin:0 auto 32px;
-        line-height:1.8;
+        font-size: 1rem;
+        color: #7B6472;
+        line-height: 1.8;
+        max-width: 560px;
+        margin: 0 auto 2rem;
     }
-    .stat-grid {
-        display:grid;
-        grid-template-columns:repeat(4,1fr);
-        background:linear-gradient(90deg,#fff0f5,#eef4e8);
-        border-radius:20px;overflow:hidden;
-        margin-top:40px;
-        border:1px solid #f0e0e8;
+
+    /* ── Feature cards ── */
+    .feat-card {
+        background: rgba(255,255,255,.75);
+        border: 1px solid rgba(248,168,214,.38);
+        border-radius: 1.3rem;
+        padding: 1.8rem 1.6rem;
+        height: 100%;
+        box-shadow: 0 14px 30px rgba(200,107,133,.08);
+        backdrop-filter: blur(12px);
+    }
+    .feat-icon-wrap {
+        width: 48px; height: 48px;
+        border-radius: 1rem;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.35rem;
+        margin-bottom: 1rem;
+    }
+    .feat-title {
+        font-weight: 700;
+        font-size: 1rem;
+        color: #2F2330;
+        margin-bottom: .45rem;
+    }
+    .feat-desc {
+        font-size: .88rem;
+        color: #7B6472;
+        line-height: 1.68;
+    }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        background: linear-gradient(90deg, rgba(255,240,245,.90), rgba(212,235,194,.70));
+        border-radius: 1.3rem;
+        overflow: hidden;
+        margin-top: 2rem;
+        border: 1px solid rgba(248,168,214,.30);
+        box-shadow: 0 8px 24px rgba(200,107,133,.07);
     }
     .stat-cell {
-        padding:24px 16px;text-align:center;
-        border-right:1px solid rgba(240,200,215,0.5);
+        padding: 1.5rem 1rem;
+        text-align: center;
+        border-right: 1px solid rgba(248,168,214,.25);
     }
-    .stat-cell:last-child { border-right:none; }
-    .stat-val { font-size:28px;font-weight:800;color:#2d2d2d; }
-    .stat-label { font-size:12px;color:#999;margin-top:4px; }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.9rem;
+        font-weight: 800;
+        color: #2F2330;
+        line-height: 1;
+    }
+    .stat-lbl {
+        font-size: .80rem;
+        color: #7B6472;
+        margin-top: .35rem;
+        font-weight: 500;
+    }
+
+    /* ── CTA Buttons ── */
+    div[data-testid="stButton"] button[kind="primary"] {
+        background: linear-gradient(135deg, #F48ABD, #D94E91) !important;
+        border-radius: 999px !important;
+        font-weight: 800 !important;
+        font-size: .97rem !important;
+        padding: .75rem 2rem !important;
+        border: none !important;
+        box-shadow: 0 12px 24px rgba(217,78,145,.22) !important;
+        color: white !important;
+        min-height: 48px !important;
+    }
+    div[data-testid="stButton"] button[kind="secondary"] {
+        background: rgba(255,255,255,.72) !important;
+        border-radius: 999px !important;
+        border: 1.5px solid rgba(131,143,88,.55) !important;
+        color: #838F58 !important;
+        font-weight: 700 !important;
+        font-size: .97rem !important;
+        min-height: 48px !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 
-    # Hero
+    # ── Hero Section ──────────────────────────────────────
     st.markdown("""
-    <div style="text-align:center;padding:48px 20px 32px;">
-        <div class="hero-badge">✨ AI-Powered Foundation Matching</div>
+    <div style="text-align:center; padding: 3rem 1rem 1.8rem;">
+        <div class="hero-pill">✦ AI-Powered Foundation Matching ✦</div>
         <h1 class="hero-title">
-            Find Your Perfect<br>
-            <span>Foundation Match</span>
+            Find Your Perfect <span class="pink">Foundation</span><br>
+            <span class="olive">Match</span>
         </h1>
         <p class="hero-sub">
             Analyze your skin tone and undertone to discover foundation
@@ -55,70 +153,66 @@ def render():
     </div>
     """, unsafe_allow_html=True)
 
-    # CTA Buttons
-    _, col_start, col_how, _ = st.columns([1.2, 1.1, 1.1, 1.2])
+    # ── CTA Buttons ───────────────────────────────────────
+    _, col_start, col_how, _ = st.columns([1.5, 1, 1, 1.5])
     with col_start:
-        if st.button("▶  Start Analysis", use_container_width=True,
-                     type="primary", key="hero_start"):
+        if st.button("▶  Start Analysis", type="primary",
+                     use_container_width=True, key="hero_start"):
             st.session_state["nav_target"] = "skin"
             st.rerun()
     with col_how:
-        if st.button("How It Works", use_container_width=True,
-                     key="hero_how"):
+        if st.button("How It Works", type="secondary",
+                     use_container_width=True, key="hero_how"):
             st.session_state["nav_target"] = "about"
             st.rerun()
 
-    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("<div style='height:1.8rem;'></div>", unsafe_allow_html=True)
 
-    # Feature Cards
+    # ── Feature Cards ─────────────────────────────────────
     fc1, fc2, fc3 = st.columns(3, gap="medium")
+
     cards = [
-        ("#fff0f5", "#fad4e0", "#c0587e", "📷", "Upload Photo",
+        ("#FFF0F5", "rgba(255,168,214,.35)", "📷",
+         "Upload Photo",
          "Use your own photo or capture one live with your webcam. We analyze your skin directly."),
-        ("#eef4e8", "#d4e8c0", "#5a8050", "📊", "Skin Tone Analysis",
+        ("#EEF4E8", "rgba(186,223,147,.40)", "📊",
+         "Skin Tone Analysis",
          "Get your skin tone, undertone classification, and Monk Skin Tone scale score instantly."),
-        ("#fff0f5", "#fad4e0", "#c0587e", "✨", "Foundation Recommendation",
+        ("#FFF0F5", "rgba(255,168,214,.28)", "✨",
+         "Foundation Recommendation",
          "Matched foundations are ranked by Euclidean color distance for the most accurate shade."),
     ]
-    for col, (bg, icon_bg, accent, icon, title, desc) in zip([fc1, fc2, fc3], cards):
+
+    for col, (bg, icon_bg, icon, title, desc) in zip([fc1, fc2, fc3], cards):
         with col:
             st.markdown(f"""
-            <div style="
-                background:{bg};border-radius:18px;
-                padding:28px 22px;height:100%;
-                border:1px solid rgba(0,0,0,0.05);">
-                <div style="
-                    width:46px;height:46px;border-radius:13px;
-                    background:{icon_bg};display:flex;
-                    align-items:center;justify-content:center;
-                    font-size:20px;margin-bottom:14px;">
+            <div class="feat-card" style="background:{bg};">
+                <div class="feat-icon-wrap" style="background:{icon_bg};">
                     {icon}
                 </div>
-                <div style="font-weight:700;font-size:15px;
-                    color:#1a1a1a;margin-bottom:8px;">{title}</div>
-                <div style="font-size:13px;color:#777;
-                    line-height:1.7;">{desc}</div>
+                <div class="feat-title">{title}</div>
+                <div class="feat-desc">{desc}</div>
             </div>
             """, unsafe_allow_html=True)
 
-    # Stats
+    # ── Stats Bar ─────────────────────────────────────────
     st.markdown("""
-    <div class="stat-grid">
+    <div class="stats-bar">
         <div class="stat-cell">
-            <div class="stat-val">50+</div>
-            <div class="stat-label">Foundation Shades</div>
+            <div class="stat-num">50+</div>
+            <div class="stat-lbl">Foundation Shades</div>
         </div>
         <div class="stat-cell">
-            <div class="stat-val">10</div>
-            <div class="stat-label">Brands Covered</div>
+            <div class="stat-num">10</div>
+            <div class="stat-lbl">Brands Covered</div>
         </div>
         <div class="stat-cell">
-            <div class="stat-val">99%</div>
-            <div class="stat-label">Detection Accuracy</div>
+            <div class="stat-num">99%</div>
+            <div class="stat-lbl">Detection Accuracy</div>
         </div>
         <div class="stat-cell">
-            <div class="stat-val">&lt; 2s</div>
-            <div class="stat-label">Analysis Time</div>
+            <div class="stat-num">&lt; 2s</div>
+            <div class="stat-lbl">Analysis Time</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
