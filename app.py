@@ -263,7 +263,7 @@ section[data-testid="stSidebar"] .stButton > button:hover{
 GLOBAL BUTTONS
 ========================================================= */
 
-.main .stButton > button{
+div[data-testid="stAppViewContainer"] > .main .stButton > button{
 
     border-radius:999px !important;
 
@@ -277,13 +277,13 @@ GLOBAL BUTTONS
     transition:all .18s ease !important;
 }
 
-.main .stButton > button:hover{
+div[data-testid="stAppViewContainer"] > .main .stButton > button:hover{
     transform:translateY(-1px);
 
     box-shadow:0 8px 20px rgba(217,78,145,.16) !important;
 }
 
-.main .stButton > button[kind="primary"]{
+div[data-testid="stAppViewContainer"] > .main .stButton > button[kind="primary"]{
 
     background:linear-gradient(
         135deg,
@@ -296,7 +296,7 @@ GLOBAL BUTTONS
     border:none !important;
 }
 
-.main .stButton > button[kind="secondary"]{
+div[data-testid="stAppViewContainer"] > .main .stButton > button[kind="secondary"]{
 
     background:rgba(255,255,255,.72) !important;
 
