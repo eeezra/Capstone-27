@@ -69,23 +69,25 @@ section[data-testid="stSidebar"] .block-container {
 }
 
 /* ── Nav buttons di sidebar ── */
+/* ── Nav buttons di sidebar ── */
 section[data-testid="stSidebar"] .stButton > button {
     width: 100% !important;
     text-align: left !important;
     justify-content: flex-start !important;
     background: transparent !important;
     border: none !important;
-    border-radius: 12px !important;
-    padding: 10px 14px !important;
-    font-size: 14px !important;
-    font-weight: 700 !important;
+    border-radius: 10px !important;
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
     color: #758952 !important;
     box-shadow: none !important;
     min-height: unset !important;
-    height: 42px !important;
+    height: 36px !important;
     margin: 1px 0 !important;
     transition: all 0.18s !important;
     transform: none !important;
+    line-height: 1 !important;
 }
 section[data-testid="stSidebar"] .stButton > button:hover {
     background: rgba(255,168,214,.28) !important;
@@ -93,8 +95,6 @@ section[data-testid="stSidebar"] .stButton > button:hover {
     transform: none !important;
     box-shadow: none !important;
 }
-
-/* ── Active nav button ── */
 section[data-testid="stSidebar"] .nav-active .stButton > button {
     background: linear-gradient(
         90deg,
@@ -102,7 +102,7 @@ section[data-testid="stSidebar"] .nav-active .stButton > button {
         rgba(249,209,217,.70)
     ) !important;
     color: #2F2330 !important;
-    box-shadow: 0 6px 16px rgba(248,138,189,.18) !important;
+    box-shadow: none !important;
 }
 
 /* ── Global buttons (di luar sidebar) ── */
