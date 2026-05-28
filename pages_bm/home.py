@@ -1,5 +1,6 @@
 import streamlit as st
 
+
 def render():
 
     st.markdown("""
@@ -7,18 +8,12 @@ def render():
 
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&display=swap');
 
-    /* =========================================================
-    HERO
-    ========================================================= */
-
     .hero-wrap{
         text-align:center;
-
         padding-top:1.4rem;
     }
 
     .hero-pill{
-
         display:inline-flex;
         align-items:center;
         gap:.45rem;
@@ -42,7 +37,6 @@ def render():
     }
 
     .hero-title{
-
         font-family:'Playfair Display', serif !important;
 
         font-size:clamp(3rem, 5vw, 5rem);
@@ -69,7 +63,6 @@ def render():
     }
 
     .hero-sub{
-
         max-width:430px;
 
         margin:auto auto 2rem auto;
@@ -81,9 +74,7 @@ def render():
         color:#7B6472;
     }
 
-    /* =========================================================
-    FEATURE CARDS
-    ========================================================= */
+    /* FEATURE CARDS */
 
     .cards-wrap{
         max-width:900px;
@@ -91,7 +82,6 @@ def render():
     }
 
     .feat-card{
-
         border-radius:28px;
 
         padding:1.3rem 1.2rem;
@@ -106,7 +96,6 @@ def render():
     }
 
     .feat-icon{
-
         width:42px;
         height:42px;
 
@@ -122,7 +111,6 @@ def render():
     }
 
     .feat-title{
-
         font-size:1rem;
         font-weight:800;
 
@@ -132,7 +120,6 @@ def render():
     }
 
     .feat-desc{
-
         font-size:.88rem;
 
         line-height:1.8;
@@ -140,13 +127,11 @@ def render():
         color:#7B6472;
     }
 
-    /* =========================================================
-    STATS BAR
-    ========================================================= */
+    /* STATS BAR */
 
     .stats-bar{
-
         display:grid;
+
         grid-template-columns:repeat(4,1fr);
 
         max-width:760px;
@@ -169,7 +154,6 @@ def render():
     }
 
     .stat-cell{
-
         padding:1.3rem .7rem;
 
         text-align:center;
@@ -182,7 +166,6 @@ def render():
     }
 
     .stat-num{
-
         font-family:'Playfair Display', serif !important;
 
         font-size:2rem;
@@ -195,7 +178,6 @@ def render():
     }
 
     .stat-lbl{
-
         margin-top:.35rem;
 
         font-size:.78rem;
@@ -208,9 +190,9 @@ def render():
     </style>
     """, unsafe_allow_html=True)
 
-    # =========================================================
+    # ======================================================
     # HERO
-    # =========================================================
+    # ======================================================
 
     st.markdown("""
     <div class="hero-wrap">
@@ -234,9 +216,9 @@ def render():
     </div>
     """, unsafe_allow_html=True)
 
-    # =========================================================
-    # CTA BUTTONS
-    # =========================================================
+    # ======================================================
+    # BUTTONS
+    # ======================================================
 
     _, col1, col2, _ = st.columns([2.2, .95, .95, 2.2])
 
@@ -253,20 +235,20 @@ def render():
     with col2:
         if st.button(
             "How It Works",
-            type="secondary",
             use_container_width=True,
             key="hero_about"
         ):
             st.session_state.page = "about"
             st.rerun()
 
-    st.markdown("<div style='height:1.6rem'></div>", unsafe_allow_html=True)
+    st.markdown(
+        "<div style='height:1.8rem'></div>",
+        unsafe_allow_html=True
+    )
 
-    # =========================================================
+    # ======================================================
     # FEATURE CARDS
-    # =========================================================
-
-    st.markdown('<div class="cards-wrap">', unsafe_allow_html=True)
+    # ======================================================
 
     c1, c2, c3 = st.columns(3, gap="medium")
 
@@ -297,7 +279,7 @@ def render():
         ),
     ]
 
-    for col, (bg, icon_bg, icon, title, desc) in zip([c1,c2,c3], cards):
+    for col, (bg, icon_bg, icon, title, desc) in zip([c1, c2, c3], cards):
 
         with col:
 
@@ -305,7 +287,7 @@ def render():
             <div class="feat-card" style="background:{bg};">
 
                 <div class="feat-icon"
-                    style="background:{icon_bg};">
+                     style="background:{icon_bg};">
                     {icon}
                 </div>
 
@@ -320,11 +302,9 @@ def render():
             </div>
             """, unsafe_allow_html=True)
 
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    # =========================================================
-    # STATS BAR
-    # =========================================================
+    # ======================================================
+    # STATS
+    # ======================================================
 
     st.markdown("""
 
