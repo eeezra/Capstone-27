@@ -5,18 +5,7 @@ def render():
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap');
 
-    /* ── Background radial gradients persis seperti desain ── */
-    .stApp {
-        background:
-            radial-gradient(circle at 88% 8%,  rgba(255,168,214,.38), transparent 22rem),
-            radial-gradient(circle at 6%  82%,  rgba(212,235,194,.50), transparent 22rem),
-            linear-gradient(135deg, #FFF0F5 0%, #FFF8F6 50%, #F9EEF2 100%) !important;
-    }
-    .main, .main .block-container {
-        background: transparent !important;
-    }
-
-    /* ── Hero pill badge ── */
+    /* ── Hero pill ── */
     .hero-pill {
         display: inline-flex;
         align-items: center;
@@ -32,32 +21,24 @@ def render():
         margin-bottom: 1.4rem;
     }
 
-    /* ── Hero title — Playfair Display ── */
+    /* ── Hero title ── */
     .hero-title {
         font-family: 'Playfair Display', serif !important;
-        font-size: clamp(2.4rem, 4vw, 4.2rem);
+        font-size: clamp(2.2rem, 4vw, 3.8rem);
         font-weight: 800;
-        line-height: 1.08;
+        line-height: 1.1;
         letter-spacing: -.02em;
         color: #2F2330;
         margin: 0 0 1rem;
+        text-align: center;
     }
     .hero-title .pink  { color: #D94E91; }
     .hero-title .olive { color: #838F58; }
 
-    /* ── Subtitle ── */
-    .hero-sub {
-        font-size: 1rem;
-        color: #7B6472;
-        line-height: 1.8;
-        max-width: 560px;
-        margin: 0 auto 2rem;
-    }
-
     /* ── Feature cards ── */
     .feat-card {
         background: rgba(255,255,255,.75);
-        border: 1px solid rgba(248,168,214,.38);
+        border: 1px solid rgba(248,168,214,.35);
         border-radius: 1.3rem;
         padding: 1.8rem 1.6rem;
         height: 100%;
@@ -87,17 +68,19 @@ def render():
     .stats-bar {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        background: linear-gradient(90deg, rgba(255,240,245,.90), rgba(212,235,194,.70));
+        background: linear-gradient(90deg,
+            rgba(255,240,245,.90),
+            rgba(212,235,194,.70));
         border-radius: 1.3rem;
         overflow: hidden;
         margin-top: 2rem;
-        border: 1px solid rgba(248,168,214,.30);
+        border: 1px solid rgba(248,168,214,.28);
         box-shadow: 0 8px 24px rgba(200,107,133,.07);
     }
     .stat-cell {
         padding: 1.5rem 1rem;
         text-align: center;
-        border-right: 1px solid rgba(248,168,214,.25);
+        border-right: 1px solid rgba(248,168,214,.22);
     }
     .stat-cell:last-child { border-right: none; }
     .stat-num {
@@ -113,40 +96,25 @@ def render():
         margin-top: .35rem;
         font-weight: 500;
     }
-
-    /* ── CTA Buttons ── */
-    div[data-testid="stButton"] button[kind="primary"] {
-        background: linear-gradient(135deg, #F48ABD, #D94E91) !important;
-        border-radius: 999px !important;
-        font-weight: 800 !important;
-        font-size: .97rem !important;
-        padding: .75rem 2rem !important;
-        border: none !important;
-        box-shadow: 0 12px 24px rgba(217,78,145,.22) !important;
-        color: white !important;
-        min-height: 48px !important;
-    }
-    div[data-testid="stButton"] button[kind="secondary"] {
-        background: rgba(255,255,255,.72) !important;
-        border-radius: 999px !important;
-        border: 1.5px solid rgba(131,143,88,.55) !important;
-        color: #838F58 !important;
-        font-weight: 700 !important;
-        font-size: .97rem !important;
-        min-height: 48px !important;
-    }
     </style>
     """, unsafe_allow_html=True)
 
-    # ── Hero Section ──────────────────────────────────────
+    # ── Hero ─────────────────────────────────────────────
     st.markdown("""
-    <div style="text-align:center; padding: 3rem 1rem 1.8rem;">
+    <div style="text-align:center; padding: 3rem 1rem 1.4rem;">
         <div class="hero-pill">✦ AI-Powered Foundation Matching ✦</div>
         <h1 class="hero-title">
             Find Your Perfect <span class="pink">Foundation</span><br>
             <span class="olive">Match</span>
         </h1>
-        <p class="hero-sub">
+        <p style="
+            font-size: 1rem;
+            color: #7B6472;
+            line-height: 1.8;
+            max-width: 500px;
+            margin: 0 auto 2rem auto;
+            text-align: center;
+        ">
             Analyze your skin tone and undertone to discover foundation
             shades that suit you — powered by computer vision and color science.
         </p>
@@ -154,33 +122,56 @@ def render():
     """, unsafe_allow_html=True)
 
     # ── CTA Buttons ───────────────────────────────────────
-    _, col_start, col_how, _ = st.columns([1.5, 1, 1, 1.5])
+    _, col_start, col_how, _ = st.columns([1.8, 1, 1, 1.8])
     with col_start:
-        if st.button("▶  Start Analysis", type="primary",
-                     use_container_width=True, key="hero_start"):
+        if st.button(
+            "▶  Start Analysis",
+            type="primary",
+            use_container_width=True,
+            key="hero_start",
+        ):
             st.session_state["nav_target"] = "skin"
             st.rerun()
     with col_how:
-        if st.button("How It Works", type="secondary",
-                     use_container_width=True, key="hero_how"):
+        if st.button(
+            "How It Works",
+            type="secondary",
+            use_container_width=True,
+            key="hero_how",
+        ):
             st.session_state["nav_target"] = "about"
             st.rerun()
 
-    st.markdown("<div style='height:1.8rem;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height:1.6rem;'></div>", unsafe_allow_html=True)
 
     # ── Feature Cards ─────────────────────────────────────
     fc1, fc2, fc3 = st.columns(3, gap="medium")
 
     cards = [
-        ("#FFF0F5", "rgba(255,168,214,.35)", "📷",
-         "Upload Photo",
-         "Use your own photo or capture one live with your webcam. We analyze your skin directly."),
-        ("#EEF4E8", "rgba(186,223,147,.40)", "📊",
-         "Skin Tone Analysis",
-         "Get your skin tone, undertone classification, and Monk Skin Tone scale score instantly."),
-        ("#FFF0F5", "rgba(255,168,214,.28)", "✨",
-         "Foundation Recommendation",
-         "Matched foundations are ranked by Euclidean color distance for the most accurate shade."),
+        (
+            "#FFF0F5",
+            "rgba(255,168,214,.32)",
+            "📷",
+            "Upload Photo",
+            "Use your own photo or capture one live with your webcam. "
+            "We analyze your skin directly.",
+        ),
+        (
+            "#EEF4E8",
+            "rgba(186,223,147,.42)",
+            "📊",
+            "Skin Tone Analysis",
+            "Get your skin tone, undertone classification, and Monk Skin "
+            "Tone scale score instantly.",
+        ),
+        (
+            "#FFF0F5",
+            "rgba(255,168,214,.28)",
+            "✨",
+            "Foundation Recommendation",
+            "Matched foundations are ranked by Euclidean color distance "
+            "for the most accurate shade.",
+        ),
     ]
 
     for col, (bg, icon_bg, icon, title, desc) in zip([fc1, fc2, fc3], cards):
