@@ -1,3 +1,4 @@
+```python
 import streamlit as st
 
 st.set_page_config(
@@ -24,6 +25,9 @@ html, body, [class*="css"]{
     color:#2F2330;
 }
 
+/* =========================================================
+MAIN APP
+========================================================= */
 
 .stApp{
     background:
@@ -67,6 +71,9 @@ html, body, [class*="css"]{
     z-index:-1;
 }
 
+/* =========================================================
+STREAMLIT CLEANUP
+========================================================= */
 
 #MainMenu,
 footer,
@@ -86,6 +93,9 @@ section.main > div{
     padding-top:0 !important;
 }
 
+/* =========================================================
+BLOCK CONTAINER
+========================================================= */
 
 .main .block-container{
     max-width:980px !important;
@@ -96,6 +106,9 @@ section.main > div{
     margin:auto !important;
 }
 
+/* =========================================================
+SIDEBAR
+========================================================= */
 
 section[data-testid="stSidebar"]{
     width:170px !important;
@@ -404,3 +417,4 @@ elif page == "foundation":
 elif page == "about":
     from pages_bm.about_method import render
     render()
+```
