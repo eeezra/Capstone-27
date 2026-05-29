@@ -153,6 +153,13 @@ def render_home():
         color:#7B6472;
     }
 
+    [data-testid="stVerticalBlockBorderWrapper"]{
+        border-radius:22px !important;
+        background:rgba(255,255,255,.55) !important;
+        border:1px solid rgba(255,168,214,.25) !important;
+        padding:18px !important;
+    }
+    
     </style>
     """, unsafe_allow_html=True)
 
@@ -187,7 +194,7 @@ def render_home():
         <h1 style="
             text-align:center;
             font-family:'Playfair Display',serif;
-            font-size:72px;
+            font-size:58px;
             line-height:1.05;
             margin-bottom:16px;
             color:#2F2330;
@@ -247,47 +254,84 @@ def render_home():
     # =====================================================
     # FEATURE CARDS
     # =====================================================
-    c1, c2, c3 = st.columns(3)
+    
+    c1, c2, c3 = st.columns([1,1,1], gap="large")
     
     with c1:
-        st.info(
-            "📷\n\n"
-            "**Upload Photo**\n\n"
-            "Use your own photo or capture one live with your webcam. "
-            "We analyze your skin directly."
-        )
+        with st.container(border=True):
+            st.markdown("### 📷")
+            st.markdown("**Upload Photo**")
+            st.caption(
+                "Use your own photo or capture one live with your webcam. "
+                "We analyze your skin directly."
+            )
     
     with c2:
-        st.success(
-            "📊\n\n"
-            "**Skin Tone Analysis**\n\n"
-            "Get your skin tone, undertone classification, "
-            "and Monk Skin Tone scale score instantly."
-        )
+        with st.container(border=True):
+            st.markdown("### 📊")
+            st.markdown("**Skin Tone Analysis**")
+            st.caption(
+                "Get your skin tone, undertone classification, "
+                "and Monk Skin Tone scale score instantly."
+            )
     
     with c3:
-        st.info(
-            "✨\n\n"
-            "**Foundation Recommendation**\n\n"
-            "Matched foundations are ranked by Euclidean "
-            "color distance for the most accurate shade."
-        )
+        with st.container(border=True):
+            st.markdown("### ✨")
+            st.markdown("**Foundation Recommendation**")
+            st.caption(
+                "Matched foundations are ranked by Euclidean "
+                "color distance for the most accurate shade."
+            )
 
     st.write("")
 
     # =====================================================
     # STATS
     # =====================================================
+    
+    st.write("")
+    
+    st.markdown("""
+    <div style="
+    padding:18px 24px;
+    border-radius:20px;
+    background:linear-gradient(
+    90deg,
+    rgba(249,209,217,.55),
+    rgba(212,235,194,.72)
+    );
+    border:1px solid rgba(255,168,214,.25);
+    ">
+    </div>
+    """, unsafe_allow_html=True)
+    
     c1, c2, c3, c4 = st.columns(4)
     
     with c1:
-        st.metric("Foundation Shades", "50+")
+        st.markdown(
+            "<h2 style='text-align:center'>50+</h2>"
+            "<p style='text-align:center'>Foundation Shades</p>",
+            unsafe_allow_html=True
+        )
     
     with c2:
-        st.metric("Brands Covered", "10")
+        st.markdown(
+            "<h2 style='text-align:center'>10</h2>"
+            "<p style='text-align:center'>Brands Covered</p>",
+            unsafe_allow_html=True
+        )
     
     with c3:
-        st.metric("Detection Accuracy", "99%")
+        st.markdown(
+            "<h2 style='text-align:center'>99%</h2>"
+            "<p style='text-align:center'>Detection Accuracy</p>",
+            unsafe_allow_html=True
+        )
     
     with c4:
-        st.metric("Analysis Time", "< 2s")
+        st.markdown(
+            "<h2 style='text-align:center'>&lt; 2s</h2>"
+            "<p style='text-align:center'>Analysis Time</p>",
+            unsafe_allow_html=True
+        )
