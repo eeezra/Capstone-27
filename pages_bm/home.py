@@ -155,9 +155,9 @@ def render_home():
 
     [data-testid="stVerticalBlockBorderWrapper"]{
         border-radius:22px !important;
-        background:rgba(255,255,255,.55) !important;
+        background:rgba(255,255,255,.60) !important;
         border:1px solid rgba(255,168,214,.25) !important;
-        padding:18px !important;
+        padding:20px !important;
     }
     
     </style>
@@ -289,78 +289,37 @@ def render_home():
     # =====================================================
     # STATS
     # =====================================================
-
-    st.markdown("""
-    <style>
     
-    .stats-wrapper{
-        background:linear-gradient(
-            90deg,
-            rgba(249,209,217,.55),
-            rgba(212,235,194,.72)
-        );
+    stats_container = st.container(border=True)
     
-        border-radius:22px;
+    with stats_container:
     
-        border:1px solid rgba(255,168,214,.25);
+        c1, c2, c3, c4 = st.columns(4)
     
-        padding:22px 18px;
+        with c1:
+            st.markdown(
+                "<h2 style='text-align:center;'>50+</h2>",
+                unsafe_allow_html=True
+            )
+            st.caption("Foundation Shades")
     
-        margin-top:20px;
-    }
+        with c2:
+            st.markdown(
+                "<h2 style='text-align:center;'>10</h2>",
+                unsafe_allow_html=True
+            )
+            st.caption("Brands Covered")
     
-    .stats-grid{
-        display:grid;
-        grid-template-columns:repeat(4,1fr);
-        text-align:center;
-    }
+        with c3:
+            st.markdown(
+                "<h2 style='text-align:center;'>99%</h2>",
+                unsafe_allow_html=True
+            )
+            st.caption("Detection Accuracy")
     
-    .stat-number{
-        font-size:34px;
-        font-weight:800;
-        color:#2F2330;
-    }
-    
-    .stat-label{
-        font-size:13px;
-        color:#7B6472;
-    }
-    
-    </style>
-    
-    <div class="stats-wrapper">
-    
-        <div class="stats-grid">
-    
-            <div>
-                <div class="stat-number">50+</div>
-                <div class="stat-label">
-                    Foundation Shades
-                </div>
-            </div>
-    
-            <div>
-                <div class="stat-number">10</div>
-                <div class="stat-label">
-                    Brands Covered
-                </div>
-            </div>
-    
-            <div>
-                <div class="stat-number">99%</div>
-                <div class="stat-label">
-                    Detection Accuracy
-                </div>
-            </div>
-    
-            <div>
-                <div class="stat-number">&lt; 2s</div>
-                <div class="stat-label">
-                    Analysis Time
-                </div>
-            </div>
-    
-        </div>
-    
-    </div>
-    """, unsafe_allow_html=True)
+        with c4:
+            st.markdown(
+                "<h2 style='text-align:center;'>&lt; 2s</h2>",
+                unsafe_allow_html=True
+            )
+            st.caption("Analysis Time")
