@@ -402,11 +402,6 @@ if "uploaded_image" not in st.session_state:
 # SIDEBAR
 # =========================================================
 
-st.markdown(
-    "<h1 style='color:red'>TEST HTML</h1>",
-    unsafe_allow_html=True
-)
-
 with st.sidebar:
 
     st.markdown("""
