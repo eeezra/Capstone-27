@@ -11,7 +11,7 @@ def _lab_to_hex(L, a, b):
         return "#c8956c"
 
 
-def render():
+def render_results():
     st.markdown("""
     <style>
     .result-card {
