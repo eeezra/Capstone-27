@@ -247,120 +247,47 @@ def render_home():
     # =====================================================
     # FEATURE CARDS
     # =====================================================
-
     c1, c2, c3 = st.columns(3)
-
+    
     with c1:
-        st.markdown("""
-        <div class="feature-card">
-
-            <div class="feature-icon"
-                 style="background:#FFF0F5;color:#F48ABD;">
-                📷
-            </div>
-
-            <div class="feature-title">
-                Upload Photo
-            </div>
-
-            <div class="feature-desc">
-                Use your own photo or capture one live with your webcam.
-                We analyze your skin directly.
-            </div>
-
-        </div>
-        """, unsafe_allow_html=True)
-
+        st.info(
+            "📷\n\n"
+            "**Upload Photo**\n\n"
+            "Use your own photo or capture one live with your webcam. "
+            "We analyze your skin directly."
+        )
+    
     with c2:
-        st.markdown("""
-        <div class="feature-card"
-             style="
-                background:rgba(212,235,194,.42);
-                border-color:rgba(186,223,147,.55);
-             ">
-
-            <div class="feature-icon"
-                 style="background:#EEF4E8;color:#758952;">
-                📊
-            </div>
-
-            <div class="feature-title">
-                Skin Tone Analysis
-            </div>
-
-            <div class="feature-desc">
-                Get your skin tone, undertone classification,
-                and Monk Skin Tone scale score instantly.
-            </div>
-
-        </div>
-        """, unsafe_allow_html=True)
-
+        st.success(
+            "📊\n\n"
+            "**Skin Tone Analysis**\n\n"
+            "Get your skin tone, undertone classification, "
+            "and Monk Skin Tone scale score instantly."
+        )
+    
     with c3:
-        st.markdown("""
-        <div class="feature-card">
-
-            <div class="feature-icon"
-                 style="background:#FFF0F5;color:#F48ABD;">
-                ✨
-            </div>
-
-            <div class="feature-title">
-                Foundation Recommendation
-            </div>
-
-            <div class="feature-desc">
-                Matched foundations are ranked by Euclidean
-                color distance for the most accurate shade.
-            </div>
-
-        </div>
-        """, unsafe_allow_html=True)
+        st.info(
+            "✨\n\n"
+            "**Foundation Recommendation**\n\n"
+            "Matched foundations are ranked by Euclidean "
+            "color distance for the most accurate shade."
+        )
 
     st.write("")
 
     # =====================================================
     # STATS
     # =====================================================
-
-    st.markdown("""
-    <div class="stats-card">
-
-        <div style="
-            display:grid;
-            grid-template-columns:repeat(4,1fr);
-            text-align:center;
-        ">
-
-            <div>
-                <div class="stat-number">50+</div>
-                <div class="stat-label">
-                    Foundation Shades
-                </div>
-            </div>
-
-            <div>
-                <div class="stat-number">10</div>
-                <div class="stat-label">
-                    Brands Covered
-                </div>
-            </div>
-
-            <div>
-                <div class="stat-number">99%</div>
-                <div class="stat-label">
-                    Detection Accuracy
-                </div>
-            </div>
-
-            <div>
-                <div class="stat-number">&lt; 2s</div>
-                <div class="stat-label">
-                    Analysis Time
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-    """, unsafe_allow_html=True)
+    c1, c2, c3, c4 = st.columns(4)
+    
+    with c1:
+        st.metric("Foundation Shades", "50+")
+    
+    with c2:
+        st.metric("Brands Covered", "10")
+    
+    with c3:
+        st.metric("Detection Accuracy", "99%")
+    
+    with c4:
+        st.metric("Analysis Time", "< 2s")
