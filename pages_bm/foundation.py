@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 
 def _format_price(p):
     try:
@@ -15,6 +14,7 @@ def _delta_e_to_score(de):
         return 90.0
 
 def render_foundation():
+    import pandas as pd
     result = st.session_state.get("analysis_result")
 
     st.markdown("""
