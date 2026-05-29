@@ -1,6 +1,6 @@
 import streamlit as st
 
-def render():
+def render_skin_analysis():
     import numpy as np
     import cv2
 
