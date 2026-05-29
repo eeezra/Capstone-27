@@ -160,26 +160,10 @@ def render_home():
     # HERO
     # =====================================================
 
-    st.markdown("""
-    <div class="hero">
-
-        <div class="hero-badge">
-            ✦ AI-Powered Foundation Matching ✦
-        </div>
-
-        <div class="hero-title">
-            Find Your Perfect
-            <span class="pink">Foundation</span><br>
-            <span class="green">Match</span>
-        </div>
-
-        <div class="hero-subtitle">
-            Analyze your skin tone and undertone to discover foundation
-            shades that suit you — powered by computer vision and color science.
-        </div>
-
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        '<div style="color:red;font-size:30px">HELLO</div>',
+        unsafe_allow_html=True
+    )
 
     st.write("")
 
