@@ -1,5 +1,7 @@
 import streamlit as st
 
+st.write("VERSION:", st.__version__)
+
 st.set_page_config(
     page_title="ShadeMate",
     page_icon="🌸",
