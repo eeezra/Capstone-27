@@ -330,6 +330,26 @@ margin-bottom:2rem;
 }
 
 /* =========================================================
+LOCK SIDEBAR
+========================================================= */
+
+/* Hilangkan tombol collapse sidebar */
+[data-testid="collapsedControl"]{
+    display:none !important;
+}
+
+/* Hilangkan tombol toggle di header */
+button[kind="header"]{
+    display:none !important;
+}
+
+/* Pastikan sidebar tetap tampil */
+section[data-testid="stSidebar"]{
+    transform:none !important;
+    visibility:visible !important;
+}
+
+/* =========================================================
 SCROLLBAR
 ========================================================= */
 
