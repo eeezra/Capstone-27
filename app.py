@@ -178,6 +178,22 @@ font-weight:700;
 color:var(--olive);
 }
 
+/* paksa sidebar selalu tampil */
+
+section[data-testid="stSidebar"]{
+    display:block !important;
+    visibility:visible !important;
+    min-width:210px !important;
+}
+
+[data-testid="stSidebarCollapsedControl"]{
+    display:none !important;
+}
+
+[data-testid="collapsedControl"]{
+    display:none !important;
+}
+
 /* =========================================================
 NAVIGATION
 ========================================================= */
