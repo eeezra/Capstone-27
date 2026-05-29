@@ -1,8 +1,9 @@
 import streamlit as st
-import numpy as np
-import cv2
 
 def render():
+    import numpy as np
+    import cv2
+
     st.markdown("""
     <style>
     .upload-zone {
