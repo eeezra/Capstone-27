@@ -156,15 +156,66 @@ def render_home():
     </style>
     """, unsafe_allow_html=True)
 
-    # =====================================================
+    # ====================================================
     # HERO
     # =====================================================
 
     st.markdown(
-        '<div style="color:red;font-size:30px">HELLO</div>',
+        """
+        <p style="
+            text-align:center;
+            margin-bottom:10px;
+        ">
+            <span style="
+                background:rgba(249,209,217,.62);
+                border:1px solid rgba(255,168,214,.75);
+                color:#D94E91;
+                padding:8px 16px;
+                border-radius:999px;
+                font-size:12px;
+                font-weight:800;
+            ">
+                ✦ AI-Powered Foundation Matching ✦
+            </span>
+        </p>
+        """,
         unsafe_allow_html=True
     )
-
+    
+    st.markdown(
+        """
+        <h1 style="
+            text-align:center;
+            font-family:'Playfair Display',serif;
+            font-size:72px;
+            line-height:1.05;
+            margin-bottom:16px;
+            color:#2F2330;
+        ">
+            Find Your Perfect<br>
+            <span style="color:#EB80B6;">Foundation</span><br>
+            <span style="color:#838F58;">Match</span>
+        </h1>
+        """,
+        unsafe_allow_html=True
+    )
+    
+    st.markdown(
+        """
+        <p style="
+            text-align:center;
+            max-width:600px;
+            margin:auto;
+            color:#7B6472;
+            line-height:1.8;
+        ">
+            Analyze your skin tone and undertone to discover foundation
+            shades that suit you — powered by computer vision and color science.
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
+    
     st.write("")
 
     # =====================================================
