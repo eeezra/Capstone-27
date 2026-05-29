@@ -285,53 +285,82 @@ def render_home():
             )
 
     st.write("")
-
+    
     # =====================================================
     # STATS
     # =====================================================
-    
-    st.write("")
-    
+
     st.markdown("""
-    <div style="
-    padding:18px 24px;
-    border-radius:20px;
-    background:linear-gradient(
-    90deg,
-    rgba(249,209,217,.55),
-    rgba(212,235,194,.72)
-    );
-    border:1px solid rgba(255,168,214,.25);
-    ">
+    <style>
+    
+    .stats-wrapper{
+        background:linear-gradient(
+            90deg,
+            rgba(249,209,217,.55),
+            rgba(212,235,194,.72)
+        );
+    
+        border-radius:22px;
+    
+        border:1px solid rgba(255,168,214,.25);
+    
+        padding:22px 18px;
+    
+        margin-top:20px;
+    }
+    
+    .stats-grid{
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+        text-align:center;
+    }
+    
+    .stat-number{
+        font-size:34px;
+        font-weight:800;
+        color:#2F2330;
+    }
+    
+    .stat-label{
+        font-size:13px;
+        color:#7B6472;
+    }
+    
+    </style>
+    
+    <div class="stats-wrapper">
+    
+        <div class="stats-grid">
+    
+            <div>
+                <div class="stat-number">50+</div>
+                <div class="stat-label">
+                    Foundation Shades
+                </div>
+            </div>
+    
+            <div>
+                <div class="stat-number">10</div>
+                <div class="stat-label">
+                    Brands Covered
+                </div>
+            </div>
+    
+            <div>
+                <div class="stat-number">99%</div>
+                <div class="stat-label">
+                    Detection Accuracy
+                </div>
+            </div>
+    
+            <div>
+                <div class="stat-number">&lt; 2s</div>
+                <div class="stat-label">
+                    Analysis Time
+                </div>
+            </div>
+    
+        </div>
+    
     </div>
     """, unsafe_allow_html=True)
-    
-    c1, c2, c3, c4 = st.columns(4)
-    
-    with c1:
-        st.markdown(
-            "<h2 style='text-align:center'>50+</h2>"
-            "<p style='text-align:center'>Foundation Shades</p>",
-            unsafe_allow_html=True
-        )
-    
-    with c2:
-        st.markdown(
-            "<h2 style='text-align:center'>10</h2>"
-            "<p style='text-align:center'>Brands Covered</p>",
-            unsafe_allow_html=True
-        )
-    
-    with c3:
-        st.markdown(
-            "<h2 style='text-align:center'>99%</h2>"
-            "<p style='text-align:center'>Detection Accuracy</p>",
-            unsafe_allow_html=True
-        )
-    
-    with c4:
-        st.markdown(
-            "<h2 style='text-align:center'>&lt; 2s</h2>"
-            "<p style='text-align:center'>Analysis Time</p>",
-            unsafe_allow_html=True
-        )
