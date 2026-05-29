@@ -1,6 +1,6 @@
 import streamlit as st
 
-def render():
+def render_about_method():
     st.markdown("""
     <style>
     .step-card {
