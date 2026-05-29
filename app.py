@@ -526,11 +526,11 @@ if "uploaded_image" not in st.session_state:
     st.session_state.uploaded_image = None
 
 # ─── Import pages ──────────────────────────────────────────────────────────
-from pages_ui.home         import render_home
-from pages_ui.skin_analysis import render_skin_analysis
-from pages_ui.results       import render_results
-from pages_ui.foundation    import render_foundation
-from pages_ui.about_method  import render_about_method
+from pages_bm.home         import render_home
+from pages_bm.skin_analysis import render_skin_analysis
+from pages_bm.results       import render_results
+from pages_bm.foundation    import render_foundation
+from pages_bm.about_method  import render_about_method
 
 # ─── Sidebar ──────────────────────────────────────────────────────────────
 with st.sidebar:
